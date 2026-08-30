@@ -86,4 +86,3 @@ RelayPlan is a Vinext/React application deployed through ChatGPT Sites with a Cl
 ## License
 
 [MIT](LICENSE) © 2026 RelayPlan contributors.
-
