@@ -78,4 +78,5 @@ WebMCP, React, TypeScript, Vinext, Vite, Tailwind CSS, Cloudflare Workers, Cloud
 
 - Live application: https://relayplan-webmcp.alx21.chatgpt.site
 - Public repository: https://github.com/agammann/relayplan-webmcp
-- Public demo video: added after YouTube processing and independent watch-page verification.
+- Public demo video: https://youtu.be/a0TuOG0jMGo
+

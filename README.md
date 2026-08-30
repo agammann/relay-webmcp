@@ -6,6 +6,8 @@ RelayPlan is a shared WebMCP project control center for human tasks, agent assig
 
 **Live app:** [relayplan-webmcp.alx21.chatgpt.site](https://relayplan-webmcp.alx21.chatgpt.site)
 
+**Narrated demo:** [Watch on YouTube](https://youtu.be/a0TuOG0jMGo) · 2:35
+
 ![RelayPlan command center](docs/assets/relayplan-command-center.png)
 
 ## Screenshots
@@ -50,7 +52,7 @@ The core flow is:
 
 ## Local development
 
-Requirements: Node.js 22.13 or newer and pnpm.
+Requirements: Node.js 24 or newer and pnpm.
 
 ```bash
 pnpm install
@@ -86,3 +88,4 @@ RelayPlan is a Vinext/React application deployed through ChatGPT Sites with a Cl
 ## License
 
 [MIT](LICENSE) © 2026 RelayPlan contributors.
+

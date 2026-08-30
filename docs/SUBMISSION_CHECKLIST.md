@@ -39,16 +39,17 @@
 
 - [x] Exact narration, prompts, calls, actions, metadata, and recording checklist
 - [x] Narrated demo recorded and edited below three minutes
-- [ ] Public YouTube upload processed with audible audio
-- [ ] Independent watch page verified for title, visibility, runtime, and sound
+- [x] Public YouTube upload processed with audible audio
+- [x] Independent watch page verified for title, visibility, runtime, and sound
 
 ## Devpost
 
 - [x] Canonical answer copy drafted
-- [ ] Verified live, repository, and video URLs inserted
+- [x] Verified live, repository, and video URLs inserted
 - [ ] Logo, cover/social image, and screenshots uploaded
 - [ ] Technologies and MIT license selected
 - [ ] Every available field completed and proofread
 - [ ] Saved draft independently re-opened
 - [ ] Three pre-submit checks complete
 - [ ] Final submission confirmed and success state verified
+

@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=22.13.0"
+    "node": ">=24.0.0"
   },
   "scripts": {
     "dev": "vinext dev",
@@ -66,3 +66,4 @@
   },
   "type": "module"
 }
+
