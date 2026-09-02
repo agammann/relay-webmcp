@@ -4,10 +4,10 @@
   "packageManager": "pnpm@11.19.0",
   "description": "A shared WebMCP project control center where humans retain approval authority and agents move structured work forward.",
   "private": true,
-  "homepage": "https://relayplan-webmcp.alx21.chatgpt.site",
+  "homepage": "https://relay.alx21.chatgpt.site",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agammann/relay.git"
+    "url": "https://github.com/agammann/relay-webmcp.git"
   },
   "license": "MIT",
   "engines": {
@@ -17,7 +17,7 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "wrangler dev --config dist/server/wrangler.json",
-    "lint": "oxlint app components/relayplan-app.tsx components/webmcp-provider.tsx lib tests",
+    "lint": "oxlint app components/relay-app.tsx components/webmcp-provider.tsx lib tests",
     "typecheck": "tsc --noEmit",
     "test": "node --experimental-strip-types --test --test-isolation=none tests/*.test.ts",
     "format": "oxfmt",
