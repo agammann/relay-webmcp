@@ -76,7 +76,7 @@ WebMCP, React, TypeScript, Vinext, Vite, Tailwind CSS, Cloudflare Workers, Cloud
 
 ## Artifact URLs
 
-- Live application: https://relayplan-webmcp.alx21.chatgpt.site
-- Public repository: https://github.com/agammann/relay
-- Public demo video: https://youtu.be/a0TuOG0jMGo
+- Live application: https://relay.alx21.chatgpt.site
+- Public repository: https://github.com/agammann/relay-webmcp
+- Public demo video: https://youtu.be/ztukxIXQ3rA
 
