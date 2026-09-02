@@ -1,6 +1,6 @@
 # WebMCP tools
 
-Relay registers tools in the top-level page through `document.modelContext.registerTool`. It does not use an iframe or declarative HTML tools. All object schemas set `additionalProperties: false`; read tools use `readOnlyHint`; externally supplied task text is marked untrusted where applicable.
+Relay registers tools in the top-level page through `document.modelContext.registerTool`. It does not use an iframe or declarative HTML tools. Every tool has a human-readable display title and a closed input schema with `additionalProperties: false`; read tools use `readOnlyHint`; externally supplied task text is marked untrusted where applicable. Tool executions return JSON-serializable objects and pass cancellation signals into workspace requests.
 
 ## `get_workspace_context`
 
@@ -32,7 +32,7 @@ Inputs: agent/task IDs, question, reason, whether work can continue, and optiona
 
 ## Result contract
 
-Writes return `success`, `action`, `projectId`, `taskId`, `agentId`, `workspaceVersion`, previous and current statuses, changed entity IDs, warnings, summary, timestamp, and the updated visible workspace. Reads return structured workspace/task data plus the current version.
+Writes return `success`, `action`, `projectId`, `taskId`, `agentId`, `workspaceVersion`, previous and current statuses, changed entity IDs, warnings, summary, and timestamp after the visible workspace has updated. Reads return structured workspace/task data plus the current version. Results remain structured values until WebMCP serializes them; Relay does not pre-stringify or truncate JSON.
 
 ## Human-only operations
 

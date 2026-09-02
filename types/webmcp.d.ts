@@ -1,5 +1,6 @@
 type WebMcpTool = {
   name: string;
+  title?: string;
   description: string;
   inputSchema: Record<string, unknown>;
   annotations?: { readOnlyHint?: boolean; untrustedContentHint?: boolean };
@@ -20,6 +21,7 @@ interface Navigator {
 }
 
 interface Window {
-  __relayPlanWebMcp?: { controller: AbortController; names: string[] };
-  __relayPlanPreviewWorkspace?: import('@/lib/domain').Workspace;
+  __relayWebMcp?: { controller: AbortController; names: string[] };
+  __relayPreviewWorkspace?: import('@/lib/domain').Workspace;
 }
+

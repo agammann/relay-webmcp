@@ -18,6 +18,25 @@ test('the page registers the six documented WebMCP tools', () => {
   assert.equal((source.match(/context\.registerTool/g) ?? []).length, 1);
 });
 
+test('tools expose display titles and return structured values', () => {
+  const titles = [
+    'Read workspace context',
+    'List ready tasks',
+    'Claim task',
+    'Update task progress',
+    'Submit deliverable',
+    'Request human input',
+  ];
+  for (const title of titles) assert.match(source, new RegExp(`title: '${title}'`));
+  assert.doesNotMatch(source, /JSON\.stringify\(value\)\.slice/);
+});
+
+test('tool requests honor execution cancellation', () => {
+  assert.match(source, /request\('\/api\/workspace', \{ signal \}\)/);
+  assert.match(source, /body: JSON\.stringify\(action\), signal/);
+  assert.match(source, /throwIfAborted\(signal\)/);
+});
+
 test('tool schemas are closed and human approval is not agent-exposed', () => {
   assert.match(source, /additionalProperties: false/);
   assert.match(source, /readOnlyHint: true/);
