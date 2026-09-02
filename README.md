@@ -1,30 +1,30 @@
-# RelayPlan
+# Relay
 
 **One plan for you and your agents.**
 
-RelayPlan is a shared WebMCP project control center for human tasks, agent assignments, task packets, dependencies, progress, clarification requests, deliverables, approvals, and auditable handoffs. Agents can discover and execute structured work from the page. Humans retain the final authority to approve or reject it.
+Relay is a shared WebMCP project control center for human tasks, agent assignments, task packets, dependencies, progress, clarification requests, deliverables, approvals, and auditable handoffs. Agents can discover and execute structured work from the page. Humans retain the final authority to approve or reject it.
 
 **Live app:** [relayplan-webmcp.alx21.chatgpt.site](https://relayplan-webmcp.alx21.chatgpt.site)
 
 **Narrated demo:** [Watch on YouTube](https://youtu.be/a0TuOG0jMGo) · 2:35
 
-![RelayPlan command center](docs/assets/relayplan-command-center.png)
+![Relay command center](docs/assets/relayplan-command-center.png)
 
 ## Screenshots
 
 | Human approval inbox | Completed handoff and dependency unlock |
 | --- | --- |
-| ![RelayPlan Human Inbox](docs/assets/relayplan-human-inbox.png) | ![RelayPlan task dependency unlock](docs/assets/relayplan-dependency-unlock.png) |
+| ![Relay Human Inbox](docs/assets/relayplan-human-inbox.png) | ![Relay task dependency unlock](docs/assets/relayplan-dependency-unlock.png) |
 
-![RelayPlan activity history and six-tool WebMCP status](docs/assets/relayplan-activity-history.png)
+![Relay activity history and six-tool WebMCP status](docs/assets/relayplan-activity-history.png)
 
-## Why RelayPlan
+## Why Relay
 
-Ordinary planners do not tell an agent which work is truly ready, which context is required, or where human approval is mandatory. RelayPlan turns the visible project board into a safe, structured agent interface. Its WebMCP tools mutate the same durable workspace the person sees, so a claim, progress note, blocker, clarification, or deliverable is immediately visible and auditable.
+Ordinary planners do not tell an agent which work is truly ready, which context is required, or where human approval is mandatory. Relay turns the visible project board into a safe, structured agent interface. Its WebMCP tools mutate the same durable workspace the person sees, so a claim, progress note, blocker, clarification, or deliverable is immediately visible and auditable.
 
 ## WebMCP tools
 
-RelayPlan feature-detects `document.modelContext` (with the compatible navigator fallback) and registers six tools exactly once:
+Relay feature-detects `document.modelContext` (with the compatible navigator fallback) and registers six tools exactly once:
 
 | Tool | Mode | Purpose |
 | --- | --- | --- |
@@ -74,7 +74,7 @@ The unit suite covers domain rules, closed runtime validation, approval boundari
 
 ## Deployment
 
-RelayPlan is a Vinext/React application deployed through ChatGPT Sites with a Cloudflare D1 binding named `DB`. The workspace is stored as one versioned JSON aggregate and updated with optimistic concurrency. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+Relay is a Vinext/React application deployed through ChatGPT Sites with a Cloudflare D1 binding named `DB`. The workspace is stored as one versioned JSON aggregate and updated with optimistic concurrency. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Documentation
 
@@ -87,5 +87,5 @@ RelayPlan is a Vinext/React application deployed through ChatGPT Sites with a Cl
 
 ## License
 
-[MIT](LICENSE) © 2026 RelayPlan contributors.
+[MIT](LICENSE) © 2026 Relay contributors.
 

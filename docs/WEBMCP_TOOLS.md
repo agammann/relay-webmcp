@@ -1,12 +1,12 @@
 # WebMCP tools
 
-RelayPlan registers tools in the top-level page through `document.modelContext.registerTool`. It does not use an iframe or declarative HTML tools. All object schemas set `additionalProperties: false`; read tools use `readOnlyHint`; externally supplied task text is marked untrusted where applicable.
+Relay registers tools in the top-level page through `document.modelContext.registerTool`. It does not use an iframe or declarative HTML tools. All object schemas set `additionalProperties: false`; read tools use `readOnlyHint`; externally supplied task text is marked untrusted where applicable.
 
 ## `get_workspace_context`
 
 Read-only. Returns the project goal, deadline, progress, roster, human and agent tasks, Ready and blocked tasks, pending approvals, recent activity, and workspace version.
 
-Judge prompt: **“Read this RelayPlan project and give me a brief summary. Do not modify anything.”**
+Judge prompt: **“Read this Relay project and give me a brief summary. Do not modify anything.”**
 
 ## `list_ready_tasks`
 
@@ -46,3 +46,4 @@ Approval, rejection/revision, clarification answers, reset, export, project-goal
 4. Ask for Ready tasks, claim one, and verify the same task moves visibly to In Progress.
 5. Submit a deliverable and verify it stops at Human Review.
 6. Approve it in the visible Human Inbox and verify the activity event and dependency unlock.
+

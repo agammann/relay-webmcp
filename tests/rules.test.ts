@@ -80,7 +80,7 @@ test('human clarification answers are explicit and resumable', () => {
   const result = applyWorkspaceAction(createSeedWorkspace(), {
     type: 'answer_clarification',
     clarificationId: 'clar-demo-url',
-    answer: 'Use the verified RelayPlan Sites production URL.',
+    answer: 'Use the verified Relay Sites production URL.',
   });
 
   assert.equal(result.workspace.clarifications[0].status, 'answered');
@@ -96,3 +96,4 @@ test('reset creates a clean deterministic demo workspace', () => {
   assert.equal(reset.workspace.tasks.find((task) => task.id === 'RP-105')?.status, 'ready');
   assert.equal(reset.summary, 'The demonstration workspace was restored to its original state.');
 });
+

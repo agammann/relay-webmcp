@@ -52,7 +52,7 @@ const json = async (path: string, init?: RequestInit) => {
   headers.set('content-type', 'application/json');
   const response = await fetch(path, { ...init, headers });
   const data = (await response.json()) as Record<string, unknown>;
-  if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : 'RelayPlan request failed.');
+  if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : 'Relay request failed.');
   return data;
 };
 
@@ -92,7 +92,7 @@ function TaskBoard({ tasks, onSelect, compact = false }: { tasks: Task[]; onSele
   );
 }
 
-export function RelayPlanApp() {
+export function RelayApp() {
   const [workspace, setWorkspace] = useState<Workspace>(() => createSeedWorkspace());
   const [view, setView] = useState<View>('command');
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -145,14 +145,14 @@ export function RelayPlanApp() {
 
   const exportWorkspace = () => {
     const href = URL.createObjectURL(new Blob([JSON.stringify(workspace, null, 2)], { type: 'application/json' }));
-    const link = document.createElement('a'); link.href = href; link.download = `relayplan-workspace-v${workspace.version}.json`; link.click(); URL.revokeObjectURL(href);
+    const link = document.createElement('a'); link.href = href; link.download = `relay-workspace-v${workspace.version}.json`; link.click(); URL.revokeObjectURL(href);
   };
 
   return (
     <main className="min-h-screen bg-[var(--rp-canvas)] pb-24 text-[#172d52]">
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#10233f]/95 text-white backdrop-blur-xl">
         <div className="mx-auto flex h-[68px] max-w-[1560px] items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <button type="button" className="flex min-w-0 items-center gap-3 text-left" onClick={() => setView('command')}><span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#2d73f5] shadow-[0_8px_24px_rgba(45,115,245,0.35)]"><Command className="size-5" strokeWidth={2.3} /></span><span className="min-w-0"><span className="block truncate text-[15px] font-bold tracking-tight">RelayPlan</span><span className="hidden text-[10px] font-medium uppercase tracking-[0.15em] text-[#aabbd2] sm:block">One plan for you and your agents</span></span></button>
+          <button type="button" className="flex min-w-0 items-center gap-3 text-left" onClick={() => setView('command')}><span className="grid size-9 shrink-0 place-items-center rounded-xl bg-[#2d73f5] shadow-[0_8px_24px_rgba(45,115,245,0.35)]"><Command className="size-5" strokeWidth={2.3} /></span><span className="min-w-0"><span className="block truncate text-[15px] font-bold tracking-tight">Relay</span><span className="hidden text-[10px] font-medium uppercase tracking-[0.15em] text-[#aabbd2] sm:block">One plan for you and your agents</span></span></button>
           <nav aria-label="Workspace navigation" className="hidden items-center gap-1 xl:flex">{navigation.map((item) => { const Icon = item.icon; return <button key={item.id} type="button" onClick={() => setView(item.id)} className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition ${view === item.id ? 'bg-white/12 text-white' : 'text-[#afbed2] hover:bg-white/7 hover:text-white'}`}><Icon className="size-3.5" /> {item.label}</button>; })}</nav>
           <div className="flex items-center gap-2"><Badge className={`hidden border sm:inline-flex ${connected ? 'border-[#2e8b65]/50 bg-[#143d38] text-[#87dfbb]' : 'border-[#536983] bg-[#1b3458] text-[#c0cce0]'}`}><span className={`size-1.5 rounded-full ${connected ? 'bg-[#6fe0ad]' : 'bg-[#8fa2ba]'}`} /> {connected ? 'Shared live state' : 'Preview state'}</Badge><Button className="h-8 bg-[#2d73f5] px-3 text-white hover:bg-[#2465dc]" onClick={() => setView('activity')}><Sparkles data-icon="inline-start" /> Agent tools</Button></div>
         </div>
@@ -191,3 +191,4 @@ export function RelayPlanApp() {
     </main>
   );
 }
+

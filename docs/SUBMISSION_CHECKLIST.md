@@ -2,7 +2,7 @@
 
 ## Application
 
-- [x] RelayPlan identity, tagline, code-native logo, and social card
+- [x] Relay identity, tagline, code-native logo, and social card
 - [x] Command Center, Task Board, Human Inbox, Agent Roster, Activity History
 - [x] Structured task packets and completeness indicator
 - [x] Human/agent ownership, dependencies, capacity, blockers, review, and unlocking

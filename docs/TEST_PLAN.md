@@ -1,4 +1,4 @@
-# RelayPlan test plan
+# Relay test plan
 
 ## Automated checks
 
@@ -47,3 +47,4 @@ The Node test suite currently verifies:
 - Confirm no approval tool is discoverable.
 - Confirm text content renders without HTML execution.
 - Confirm the public source contains no tokens, credentials, personal names, or private URLs.
+

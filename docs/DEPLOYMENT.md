@@ -1,6 +1,6 @@
 # Deployment
 
-RelayPlan targets ChatGPT Sites through Vinext and the Cloudflare runtime.
+Relay targets ChatGPT Sites through Vinext and the Cloudflare runtime.
 
 ## Bindings
 
@@ -43,3 +43,4 @@ The workspace schema is in `db/schema.ts` and `drizzle/0000_relayplan_workspace.
 ## Rollback
 
 Sites versions are immutable. To roll back, redeploy a previously verified saved version. The reset-demo UI changes workspace content only; it does not alter deployment code.
+

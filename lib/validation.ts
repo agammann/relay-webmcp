@@ -115,7 +115,8 @@ export function parseWorkspaceAction(input: unknown): WorkspaceAction {
 }
 
 export function apiError(error: unknown) {
-  const message = error instanceof Error ? error.message : 'RelayPlan request failed.';
+  const message = error instanceof Error ? error.message : 'Relay request failed.';
   const status = error instanceof ValidationError ? 400 : error instanceof Error && error.name === 'RuleError' ? 409 : 500;
   return Response.json({ success: false, error: message }, { status });
 }
+

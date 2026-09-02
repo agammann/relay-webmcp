@@ -66,8 +66,8 @@ const task = (
     title,
     objective,
     projectContext:
-      'RelayPlan is a shared project control center where humans retain approval authority and agents execute structured work through WebMCP.',
-    availableInputs: overrides.availableInputs ?? ['Official challenge rules', 'RelayPlan project brief'],
+      'Relay is a shared project control center where humans retain approval authority and agents execute structured work through WebMCP.',
+    availableInputs: overrides.availableInputs ?? ['Official challenge rules', 'Relay project brief'],
     expectedOutput,
     definitionOfDone,
     ownerType: overrides.ownerType ?? 'agent',
@@ -88,7 +88,7 @@ const task = (
       objective,
       context:
         'Use only the supplied project context and authoritative sources. Keep human approval boundaries explicit.',
-      inputs: overrides.availableInputs ?? ['Official challenge rules', 'RelayPlan project brief'],
+      inputs: overrides.availableInputs ?? ['Official challenge rules', 'Relay project brief'],
       expectedOutput,
       definitionOfDone,
       deadline: overrides.dueDate ?? '2026-09-03',
@@ -115,7 +115,7 @@ export function createSeedWorkspace(): Workspace {
           agentId: 'planning-agent',
           summary: 'Verified the current challenge deadline, required artifacts, and judging criteria.',
           content:
-            'RelayPlan must provide a working live WebMCP application, public licensed source, an English project description, and a narrated public YouTube demo under three minutes.',
+            'Relay must provide a working live WebMCP application, public licensed source, an English project description, and a narrated public YouTube demo under three minutes.',
           evidence: [
             'https://webmcp.devpost.com/rules',
             'https://openai.com/webmcp-challenge/',
@@ -173,7 +173,7 @@ export function createSeedWorkspace(): Workspace {
       approvalRequired: false,
       locked: true,
     }),
-    task('RP-100', 'Choose the RelayPlan concept', 'completed', 'critical', [], ['planning'], {
+    task('RP-100', 'Choose the Relay concept', 'completed', 'critical', [], ['planning'], {
       ownerType: 'human',
       approvalRequired: false,
       completionPercentage: 100,
@@ -230,7 +230,7 @@ export function createSeedWorkspace(): Workspace {
       {
         id: 'activity-2',
         actorType: 'system',
-        actor: 'RelayPlan',
+        actor: 'Relay',
         action: 'dependencies_evaluated',
         taskId: 'RP-104',
         previousStatus: 'backlog',
@@ -246,7 +246,7 @@ export function createSeedWorkspace(): Workspace {
         taskId: 'RP-100',
         previousStatus: 'in_progress',
         newStatus: 'completed',
-        explanation: 'Selected RelayPlan as the challenge concept.',
+        explanation: 'Selected Relay as the challenge concept.',
         createdAt: '2026-08-30T17:55:00.000Z',
       },
     ],
@@ -254,3 +254,4 @@ export function createSeedWorkspace(): Workspace {
     updatedAt: '2026-08-30T18:30:00.000Z',
   };
 }
+

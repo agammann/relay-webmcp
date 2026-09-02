@@ -99,7 +99,7 @@ const refreshDependents = (workspace: Workspace) => {
       changed.push(task.id);
       addActivity(workspace, {
         actorType: 'system',
-        actor: 'RelayPlan',
+        actor: 'Relay',
         action: 'dependencies_evaluated',
         taskId: task.id,
         previousStatus,
@@ -380,3 +380,4 @@ export function applyWorkspaceAction(current: Workspace, action: WorkspaceAction
     summary,
   };
 }
+

@@ -1,5 +1,5 @@
 {
-  "name": "relayplan-webmcp",
+  "name": "relay-webmcp",
   "version": "0.1.0",
   "packageManager": "pnpm@11.19.0",
   "description": "A shared WebMCP project control center where humans retain approval authority and agents move structured work forward.",
@@ -7,7 +7,7 @@
   "homepage": "https://relayplan-webmcp.alx21.chatgpt.site",
   "repository": {
     "type": "git",
-    "url": "https://github.com/agammann/relayplan-webmcp.git"
+    "url": "https://github.com/agammann/relay.git"
   },
   "license": "MIT",
   "engines": {

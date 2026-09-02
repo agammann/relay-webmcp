@@ -17,7 +17,7 @@ const request = async (path: string, init?: RequestInit) => {
     headers,
   });
   const data = (await response.json()) as Record<string, unknown>;
-  if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : 'RelayPlan request failed.');
+  if (!response.ok) throw new Error(typeof data.error === 'string' ? data.error : 'Relay request failed.');
   return data;
 };
 
@@ -77,7 +77,7 @@ export function WebMcpProvider() {
       {
         name: 'get_workspace_context',
         description:
-          'Returns the RelayPlan project goal, deadline, progress, agent roster, human and agent tasks, ready work, blockers, pending approvals, recent activity, and workspace version. Response fields can include user-authored task and activity text and are marked as untrusted content.',
+          'Returns the Relay project goal, deadline, progress, agent roster, human and agent tasks, ready work, blockers, pending approvals, recent activity, and workspace version. Response fields can include user-authored task and activity text and are marked as untrusted content.',
         annotations: { readOnlyHint: true, untrustedContentHint: true },
         inputSchema: { type: 'object', properties: {}, additionalProperties: false },
         execute: async () => {
@@ -112,17 +112,17 @@ export function WebMcpProvider() {
       {
         name: 'list_ready_tasks',
         description:
-          'Returns unassigned RelayPlan agent tasks with complete dependencies that are not blocked, match optional capability filters, and can be claimed without exceeding agent capacity. Response task fields can include user-authored text and are marked as untrusted content.',
+          'Returns unassigned Relay agent tasks with complete dependencies that are not blocked, match optional capability filters, and can be claimed without exceeding agent capacity. Response task fields can include user-authored text and are marked as untrusted content.',
         annotations: { readOnlyHint: true, untrustedContentHint: true },
         inputSchema: {
           type: 'object',
           properties: {
-            agentId: { type: 'string', minLength: 1, maxLength: 80, description: 'Optional RelayPlan agent identifier.' },
+            agentId: { type: 'string', minLength: 1, maxLength: 80, description: 'Optional Relay agent identifier.' },
             capabilities: {
               type: 'array',
               maxItems: 12,
               description: 'Optional capability names used to filter eligible Ready tasks.',
-              items: { type: 'string', minLength: 1, maxLength: 80, description: 'One RelayPlan agent capability name.' },
+              items: { type: 'string', minLength: 1, maxLength: 80, description: 'One Relay agent capability name.' },
             },
           },
           required: [],
@@ -154,7 +154,7 @@ export function WebMcpProvider() {
       {
         name: 'claim_task',
         description:
-          'Assign one Ready, unassigned RelayPlan agent task to an active agent and move it to In Progress. Mutating: capacity, dependencies, readiness, and ownership are validated; the visible board and activity history update immediately.',
+          'Assign one Ready, unassigned Relay agent task to an active agent and move it to In Progress. Mutating: capacity, dependencies, readiness, and ownership are validated; the visible board and activity history update immediately.',
         annotations: { readOnlyHint: false, untrustedContentHint: true },
         inputSchema: {
           type: 'object',
@@ -163,13 +163,13 @@ export function WebMcpProvider() {
               type: 'string',
               minLength: 1,
               maxLength: 80,
-              description: 'Identifier of the active RelayPlan agent that will own the task.',
+              description: 'Identifier of the active Relay agent that will own the task.',
             },
             taskId: {
               type: 'string',
               pattern: '^RP-[0-9]{3,}$',
               maxLength: 20,
-              description: 'Identifier of the Ready RelayPlan task to claim.',
+              description: 'Identifier of the Ready Relay task to claim.',
             },
           },
           required: ['agentId', 'taskId'],
@@ -185,7 +185,7 @@ export function WebMcpProvider() {
       {
         name: 'update_task_progress',
         description:
-          'Add an agent progress note, completion percentage, time spent, blocker, or missing-information report to the assigned RelayPlan task. Mutating: blockers may move the task to Blocked, but this tool can never complete or approve work.',
+          'Add an agent progress note, completion percentage, time spent, blocker, or missing-information report to the assigned Relay task. Mutating: blockers may move the task to Blocked, but this tool can never complete or approve work.',
         annotations: { readOnlyHint: false, untrustedContentHint: true },
         inputSchema: {
           type: 'object',
@@ -194,13 +194,13 @@ export function WebMcpProvider() {
               type: 'string',
               minLength: 1,
               maxLength: 80,
-              description: 'Identifier of the RelayPlan agent assigned to the task.',
+              description: 'Identifier of the Relay agent assigned to the task.',
             },
             taskId: {
               type: 'string',
               pattern: '^RP-[0-9]{3,}$',
               maxLength: 20,
-              description: 'Identifier of the assigned RelayPlan task receiving the progress update.',
+              description: 'Identifier of the assigned Relay task receiving the progress update.',
             },
             note: {
               type: 'string',
@@ -263,13 +263,13 @@ export function WebMcpProvider() {
               type: 'string',
               minLength: 1,
               maxLength: 80,
-              description: 'Identifier of the RelayPlan agent submitting the deliverable.',
+              description: 'Identifier of the Relay agent submitting the deliverable.',
             },
             taskId: {
               type: 'string',
               pattern: '^RP-[0-9]{3,}$',
               maxLength: 20,
-              description: 'Identifier of the assigned RelayPlan task moving to Human Review.',
+              description: 'Identifier of the assigned Relay task moving to Human Review.',
             },
             summary: {
               type: 'string',
@@ -320,7 +320,7 @@ export function WebMcpProvider() {
       {
         name: 'request_human_input',
         description:
-          'Create a clarification request for the assigned RelayPlan task, explaining the question, why the answer is needed, whether work can continue, and optional choices. Mutating: the request appears in the Human Inbox and the task becomes Blocked when work cannot continue.',
+          'Create a clarification request for the assigned Relay task, explaining the question, why the answer is needed, whether work can continue, and optional choices. Mutating: the request appears in the Human Inbox and the task becomes Blocked when work cannot continue.',
         annotations: { readOnlyHint: false, untrustedContentHint: true },
         inputSchema: {
           type: 'object',
@@ -329,13 +329,13 @@ export function WebMcpProvider() {
               type: 'string',
               minLength: 1,
               maxLength: 80,
-              description: 'Identifier of the RelayPlan agent requesting a human decision.',
+              description: 'Identifier of the Relay agent requesting a human decision.',
             },
             taskId: {
               type: 'string',
               pattern: '^RP-[0-9]{3,}$',
               maxLength: 20,
-              description: 'Identifier of the assigned RelayPlan task that needs clarification.',
+              description: 'Identifier of the assigned Relay task that needs clarification.',
             },
             question: {
               type: 'string',

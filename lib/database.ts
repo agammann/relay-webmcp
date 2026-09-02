@@ -17,7 +17,7 @@ const schemaStatements = [
 ];
 
 const getD1 = () => {
-  if (!env.DB) throw new Error('RelayPlan database is unavailable.');
+  if (!env.DB) throw new Error('Relay database is unavailable.');
   return env.DB;
 };
 
@@ -50,7 +50,7 @@ export async function getWorkspace(): Promise<Workspace> {
     .prepare('SELECT data FROM workspaces WHERE id = ?')
     .bind(workspaceId)
     .first<{ data: string }>();
-  if (!row) throw new Error('RelayPlan workspace was not found.');
+  if (!row) throw new Error('Relay workspace was not found.');
   return JSON.parse(row.data) as Workspace;
 }
 
@@ -71,5 +71,6 @@ export async function mutateWorkspace(action: WorkspaceAction): Promise<ActionRe
       .run();
     if (write.meta.changes) return result;
   }
-  throw new Error('RelayPlan changed while the action was being applied. Please retry.');
+  throw new Error('Relay changed while the action was being applied. Please retry.');
 }
+

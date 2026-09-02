@@ -1,6 +1,6 @@
-# RelayPlan security
+# Relay security
 
-RelayPlan is a demonstration planning workspace. Do not enter secrets, credentials, regulated data, or private production material.
+Relay is a demonstration planning workspace. Do not enter secrets, credentials, regulated data, or private production material.
 
 ## Security boundaries
 
@@ -17,4 +17,5 @@ Please report a suspected vulnerability privately to the repository maintainer r
 
 ## Supported version
 
-The latest deployed RelayPlan version and the default branch are supported during the OpenAI WebMCP Challenge evaluation period.
+The latest deployed Relay version and the default branch are supported during the OpenAI WebMCP Challenge evaluation period.
+

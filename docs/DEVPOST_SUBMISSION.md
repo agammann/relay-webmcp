@@ -4,7 +4,7 @@ This file contains the canonical submission text. URLs are added only after the 
 
 ## Project name
 
-RelayPlan
+Relay
 
 ## Tagline / elevator pitch
 
@@ -12,7 +12,7 @@ One plan for you and your agents.
 
 ## Short description
 
-RelayPlan gives people and their AI agents one shared project plan. Agents discover Ready work, claim tasks, report progress, request clarification, and submit deliverables through WebMCP; humans retain approval and final-decision authority.
+Relay gives people and their AI agents one shared project plan. Agents discover Ready work, claim tasks, report progress, request clarification, and submit deliverables through WebMCP; humans retain approval and final-decision authority.
 
 ## Inspiration
 
@@ -20,23 +20,23 @@ People increasingly ask separate AI agents to research, build, write, test, and 
 
 ## What it does
 
-RelayPlan combines a command center, six-column task board, Human Inbox, agent coordination roster, structured task packets, and complete activity history. It shows human-owned, agent-owned, unassigned, locked, blocked, review, and completed work. Agents can read the same workspace, find eligible Ready tasks, claim work, post progress and blockers, ask questions, and submit evidence-backed deliverables. Deliverables stop at Human Review; only the visible human interface can approve or reject them. Approval completes the task, records the handoff, and automatically unlocks eligible dependencies.
+Relay combines a command center, six-column task board, Human Inbox, agent coordination roster, structured task packets, and complete activity history. It shows human-owned, agent-owned, unassigned, locked, blocked, review, and completed work. Agents can read the same workspace, find eligible Ready tasks, claim work, post progress and blockers, ask questions, and submit evidence-backed deliverables. Deliverables stop at Human Review; only the visible human interface can approve or reject them. Approval completes the task, records the handoff, and automatically unlocks eligible dependencies.
 
 ## How we built it
 
-RelayPlan uses React 19, TypeScript, Vinext/Vite, Tailwind CSS, Lucide icons, and ChatGPT Sites. A page-side WebMCP provider feature-detects the Model Context API and registers six schema-constrained tools exactly once. Both the interface and tools call the same `/api/workspace` service and pure domain-rule engine. A Cloudflare D1 table stores a versioned workspace aggregate; optimistic writes prevent silent lost updates. Runtime validators reject unknown fields and enforce input limits. The UI reacts to successful tool mutations through a shared browser event and remains fully usable without WebMCP.
+Relay uses React 19, TypeScript, Vinext/Vite, Tailwind CSS, Lucide icons, and ChatGPT Sites. A page-side WebMCP provider feature-detects the Model Context API and registers six schema-constrained tools exactly once. Both the interface and tools call the same `/api/workspace` service and pure domain-rule engine. A Cloudflare D1 table stores a versioned workspace aggregate; optimistic writes prevent silent lost updates. Runtime validators reject unknown fields and enforce input limits. The UI reacts to successful tool mutations through a shared browser event and remains fully usable without WebMCP.
 
 ## How WebMCP is used
 
-RelayPlan registers `get_workspace_context`, `list_ready_tasks`, `claim_task`, `update_task_progress`, `submit_deliverable`, and `request_human_input` in the top-level page through `document.modelContext.registerTool`. Read tools are annotated read-only. Write tools explain their side effects, validate narrow closed schemas, mutate durable visible state, return verifiable transition metadata, and append activity events. Approval, rejection, clarification answers, deletion, and project finalization are deliberately not exposed as agent tools.
+Relay registers `get_workspace_context`, `list_ready_tasks`, `claim_task`, `update_task_progress`, `submit_deliverable`, and `request_human_input` in the top-level page through `document.modelContext.registerTool`. Read tools are annotated read-only. Write tools explain their side effects, validate narrow closed schemas, mutate durable visible state, return verifiable transition metadata, and append activity events. Approval, rejection, clarification answers, deletion, and project finalization are deliberately not exposed as agent tools.
 
 ## Why WebMCP improves the experience
 
-Without WebMCP, an agent must infer a project from pixels or copied text and cannot safely act on it. RelayPlan turns the website’s own semantics into a structured, in-context capability layer. The agent can ask the page what is Ready, receive the exact task packet, perform a rules-checked mutation, and immediately show the person the same updated board. That removes brittle screen automation while preserving visible human oversight.
+Without WebMCP, an agent must infer a project from pixels or copied text and cannot safely act on it. Relay turns the website’s own semantics into a structured, in-context capability layer. The agent can ask the page what is Ready, receive the exact task packet, perform a rules-checked mutation, and immediately show the person the same updated board. That removes brittle screen automation while preserving visible human oversight.
 
 ## What humans and agents can do together
 
-Humans set goals, own sensitive tasks, answer ambiguities, inspect evidence, request revisions, and make final decisions. Agents discover structured work, claim it within capacity, report progress and blockers, request missing context, and submit deliverables. RelayPlan coordinates the handoff: dependency rules decide what becomes Ready next, the Human Inbox concentrates decisions, and Activity History makes every transition interpretable.
+Humans set goals, own sensitive tasks, answer ambiguities, inspect evidence, request revisions, and make final decisions. Agents discover structured work, claim it within capacity, report progress and blockers, request missing context, and submit deliverables. Relay coordinates the handoff: dependency rules decide what becomes Ready next, the Human Inbox concentrates decisions, and Activity History makes every transition interpretable.
 
 ## Challenges encountered
 
@@ -67,7 +67,7 @@ WebMCP, React, TypeScript, Vinext, Vite, Tailwind CSS, Cloudflare Workers, Cloud
 
 1. Open the live app in a WebMCP-capable ChatGPT in-app browser or Chrome evaluation environment.
 2. Confirm the lower-left activity dock reports six registered WebMCP tools.
-3. Ask: “Read this RelayPlan project and give me a brief summary. Do not modify anything.”
+3. Ask: “Read this Relay project and give me a brief summary. Do not modify anything.”
 4. Ask: “Show me the Ready tasks that the Research Agent can claim.”
 5. Claim `RP-104`, post progress, then submit a deliverable with evidence and a known limitation.
 6. Confirm the task stops at Human Review and appears in the Human Inbox.
@@ -77,6 +77,6 @@ WebMCP, React, TypeScript, Vinext, Vite, Tailwind CSS, Cloudflare Workers, Cloud
 ## Artifact URLs
 
 - Live application: https://relayplan-webmcp.alx21.chatgpt.site
-- Public repository: https://github.com/agammann/relayplan-webmcp
+- Public repository: https://github.com/agammann/relay
 - Public demo video: https://youtu.be/a0TuOG0jMGo
 
