@@ -35,6 +35,7 @@ test('tool metadata describes untrusted content without instruction-shaped text'
 
 test('all WebMCP input properties have descriptions', () => {
   assert.match(source, /inputSchema: \{ type: 'object', properties: \{\}, additionalProperties: false \}/);
+  assert.match(source, /name: 'list_ready_tasks',[\s\S]*?required: \[\],[\s\S]*?additionalProperties: false/);
   const propertyBlocks = [...source.matchAll(/properties:\s*\{([\s\S]*?)\n\s*\},\n\s*(?:required:|additionalProperties:)/g)];
   assert.equal(propertyBlocks.length, 5);
   for (const [, block] of propertyBlocks) {

@@ -125,6 +125,7 @@ export function WebMcpProvider() {
               items: { type: 'string', minLength: 1, maxLength: 80, description: 'One RelayPlan agent capability name.' },
             },
           },
+          required: [],
           additionalProperties: false,
         },
         execute: async (input) => {
