@@ -7,6 +7,7 @@ const nextConfig = readFileSync(new URL('../next.config.ts', import.meta.url), '
 const robots = readFileSync(new URL('../public/robots.txt', import.meta.url), 'utf8');
 const sitemap = readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8');
 const llms = readFileSync(new URL('../public/llms.txt', import.meta.url), 'utf8');
+const initialMigration = readFileSync(new URL('../drizzle/0000_relay_workspace.sql', import.meta.url), 'utf8');
 
 test('the root and nested routes receive the production security headers', () => {
   assert.match(nextConfig, /source: '\/'/);
@@ -32,3 +33,7 @@ test('crawler files consistently describe the Relay release', () => {
   assert.doesNotMatch(`${robots}\n${sitemap}\n${llms}`, /RelayPlan|relayplan-webmcp/);
 });
 
+test('the initial migration is safe when a workspace was created by the runtime bootstrap', () => {
+  assert.match(initialMigration, /CREATE TABLE IF NOT EXISTS `workspaces`/);
+  assert.match(initialMigration, /CREATE INDEX IF NOT EXISTS `idx_workspaces_updated_at`/);
+});
