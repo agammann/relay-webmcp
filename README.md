@@ -4,19 +4,19 @@
 
 Relay is a shared WebMCP project control center for human tasks, agent assignments, task packets, dependencies, progress, clarification requests, deliverables, approvals, and auditable handoffs. Agents can discover and execute structured work from the page. Humans retain the final authority to approve or reject it.
 
-**Live app:** [relayplan-webmcp.alx21.chatgpt.site](https://relayplan-webmcp.alx21.chatgpt.site)
+**Live app:** [relay.alx21.chatgpt.site](https://relay.alx21.chatgpt.site)
 
-**Narrated demo:** [Watch on YouTube](https://youtu.be/a0TuOG0jMGo) · 2:35
+**Narrated demo:** [Watch on YouTube](https://youtu.be/ztukxIXQ3rA) · 2:14
 
-![Relay command center](docs/assets/relayplan-command-center.png)
+![Relay command center](docs/assets/relay-command-center.png)
 
 ## Screenshots
 
 | Human approval inbox | Completed handoff and dependency unlock |
 | --- | --- |
-| ![Relay Human Inbox](docs/assets/relayplan-human-inbox.png) | ![Relay task dependency unlock](docs/assets/relayplan-dependency-unlock.png) |
+| ![Relay Human Inbox](docs/assets/relay-human-inbox.png) | ![Relay task dependency unlock](docs/assets/relay-dependency-unlock.png) |
 
-![Relay activity history and six-tool WebMCP status](docs/assets/relayplan-activity-history.png)
+![Relay activity history and six-tool WebMCP status](docs/assets/relay-activity-history.png)
 
 ## Why Relay
 
