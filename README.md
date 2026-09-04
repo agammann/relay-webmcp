@@ -8,15 +8,15 @@ Relay is a shared WebMCP project control center for human tasks, agent assignmen
 
 **Narrated demo:** [Watch on YouTube](https://youtu.be/ztukxIXQ3rA) · 2:14
 
-![Relay command center](docs/assets/relay-command-center.png)
+![Relay command center](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/447/datas/original.png)
 
 ## Screenshots
 
 | Human approval inbox | Completed handoff and dependency unlock |
 | --- | --- |
-| ![Relay Human Inbox](docs/assets/relay-human-inbox.png) | ![Relay task dependency unlock](docs/assets/relay-dependency-unlock.png) |
+| ![Relay Human Inbox](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/446/datas/original.png) | ![Relay task dependency unlock](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/449/datas/original.png) |
 
-![Relay activity history and six-tool WebMCP status](docs/assets/relay-activity-history.png)
+![Relay activity history and six-tool WebMCP status](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/448/datas/original.png)
 
 ## Why Relay
 
