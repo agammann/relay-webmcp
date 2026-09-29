@@ -1,27 +1,10 @@
 # Relay
 
-> Relay is a shared WebMCP planning workspace where humans retain approval authority and agents move structured work forward.
+Public application: https://relay.alx21.chatgpt.site
+Source and usage: https://github.com/agammann/relay-webmcp
 
-## Public links
+Relay is a browser-bound, server-stored project workspace for human tasks, structured agent assignments, dependencies, clarification questions, deliverables, and review.
 
-- Application: https://relay.alx21.chatgpt.site
-- Source: https://github.com/agammann/relay-webmcp
-- Demo: https://youtu.be/ztukxIXQ3rA
+Create a project and tasks in the UI. Six page-side WebMCP tools read context, list ready work, claim a task, record progress, request input, and submit a deliverable. Context includes answered questions and review feedback. All task operations are also available in the browser UI.
 
-## WebMCP tools
-
-- `get_workspace_context`: Read the shared project, task, agent, blocker, approval, and activity state.
-- `list_ready_tasks`: Find agent tasks whose dependencies and task packets are ready.
-- `claim_task`: Assign an eligible ready task to an active agent.
-- `update_task_progress`: Record progress, time, blockers, and missing information without completing work.
-- `submit_deliverable`: Send a deliverable to the visible Human Inbox for review.
-- `request_human_input`: Ask the human owner for a clarification or decision.
-
-## Authority boundary
-
-Agents can claim work, report progress, submit deliverables, and request clarification. Approval, rejection, clarification answers, deletion, and project finalization remain human-only actions in the visible interface.
-
-## Updates
-
-This file describes the public Relay application and its current six-tool WebMCP surface.
-
+Relay does not launch agents or execute external work. Profiles are assignment labels, not authenticated accounts. The browser cookie selects a workspace; JSON export/import supports backups and transfer. There is no account recovery or team link sharing. Approval is a workflow step, not separate human-role authentication.

@@ -1,49 +1,30 @@
-# WebMCP tools
+# Page-side WebMCP contract
 
-Relay registers tools in the top-level page through `document.modelContext.registerTool`. It does not use an iframe or declarative HTML tools. Every tool has a human-readable display title and a closed input schema with `additionalProperties: false`; read tools use `readOnlyHint`; externally supplied task text is marked untrusted where applicable. Tool executions return JSON-serializable objects and pass cancellation signals into workspace requests.
+Tools register when the saved workspace has loaded. The browser must expose `document.modelContext` or `navigator.modelContext`. All six have closed JSON schemas and mark returned user content as untrusted. The UI remains available in ordinary browsers.
 
-## `get_workspace_context`
+| Tool | Required input | Optional input |
+| --- | --- | --- |
+| get_workspace_context | `{}` | None |
+| list_ready_tasks | `{}` | `agentId`, `capabilities` (up to 12 strings) |
+| claim_task | `agentId`, `taskId` | None |
+| update_task_progress | `agentId`, `taskId`, `note`, `completionPercentage` (0–99), `timeSpentMinutes` | `blocker`, `missingInformation` |
+| request_human_input | `agentId`, `taskId`, `question`, `reason`, `canContinue` (boolean), `recommendedChoices` (array) | None |
+| submit_deliverable | `agentId`, `taskId`, `summary`, `content`, `evidence` (array), `knownLimitations` (array), `recommendedNextAction` | None |
 
-Read-only. Returns the project goal, deadline, progress, roster, human and agent tasks, Ready and blocked tasks, pending approvals, recent activity, and workspace version.
+Types are checked at runtime; strings, numbers and booleans are not coerced. Unknown properties and unknown profiles are rejected. An optional capability filter narrows a profile's eligible work; it cannot expand the profile's capabilities.
 
-Judge prompt: **“Read this Relay project and give me a brief summary. Do not modify anything.”**
+`get_workspace_context` returns `name`, `goal`, `deadline`, progress counts, `agents`, full `tasks`, full `clarifications`, `readyTasks`, recent activity, project ID, version, and update time. Task results include progress history, deliverables and review feedback. Answered questions remain readable so work can resume.
 
-## `list_ready_tasks`
+Writes return a saved action result with task ID, agent ID, previous/current state, changed IDs, summary, warnings, project ID, version, update time, current task, and its clarifications. Database or validation failures reject the tool call. No local substitute state is created.
 
-Read-only. Optional inputs are `agentId` and `capabilities`. It returns only unassigned agent work whose dependencies are complete, packet is usable, task is not blocked, agent capability matches when requested, and capacity permits a claim.
+Example sequence after creating a planning task:
 
-Judge prompt: **“Show me the Ready tasks that the Research Agent can claim.”**
+```json
+{"agentId":"planning-agent"}
+```
 
-## `claim_task`
+Call `list_ready_tasks` with that input, choose an actual returned task ID, then call `claim_task`. Use `update_task_progress` to report progress or a current blocker. Omitting blocker fields on a later progress update clears the previous progress blocker, but cannot clear unanswered blocking questions. Use `request_human_input` when an answer is needed; `canContinue: false` blocks submission until the question is answered.
 
-Inputs: `agentId`, `taskId`. Verifies an active agent, a Ready and unassigned agent task, completed dependencies, compatible capacity, and a complete packet. On success it assigns the task, moves it to In Progress, records an activity event, and returns the packet and structured transition result.
+`submit_deliverable` moves the assigned task to `human_review`. Review, clarification answers, task creation/editing, profile creation, reset, and backup import are UI actions and are not included in the six tool registrations. The same-session UI API supports those actions: this is a workflow distinction, not an authenticated human-role boundary.
 
-## `update_task_progress`
-
-Inputs: agent/task IDs, progress note, completion percentage, time spent, and optional blocker or missing information. Only the assigned agent may write. A blocker can move work to Blocked. The tool cannot mark approval-required work complete.
-
-## `submit_deliverable`
-
-Inputs: agent/task IDs, summary, content, evidence, known limitations, and recommended next action. Only the assigned agent may submit. The task moves to Human Review and appears in the Human Inbox; it does not become Completed.
-
-## `request_human_input`
-
-Inputs: agent/task IDs, question, reason, whether work can continue, and optional recommended choices. It creates a Human Inbox clarification and blocks the task when work cannot continue.
-
-## Result contract
-
-Writes return `success`, `action`, `projectId`, `taskId`, `agentId`, `workspaceVersion`, previous and current statuses, changed entity IDs, warnings, summary, and timestamp after the visible workspace has updated. Reads return structured workspace/task data plus the current version. Results remain structured values until WebMCP serializes them; Relay does not pre-stringify or truncate JSON.
-
-## Human-only operations
-
-Approval, rejection/revision, clarification answers, reset, export, project-goal changes, deletion, and overall project completion are intentionally not registered as WebMCP tools.
-
-## Manual discovery check
-
-1. Open the production URL in a WebMCP-capable ChatGPT in-app browser or Chrome environment.
-2. Open the page’s agent activity dock; it should report six tools registered.
-3. Ask the read-only summary prompt and verify no workspace version change.
-4. Ask for Ready tasks, claim one, and verify the same task moves visibly to In Progress.
-5. Submit a deliverable and verify it stops at Human Review.
-6. Approve it in the visible Human Inbox and verify the activity event and dependency unlock.
-
+Before a write starts, an aborted tool call is refused. After submission, Relay waits for the server response; aborting a caller cannot undo a database commit. On an unconfirmed response, refresh and inspect the workspace before attempting the action again.

@@ -1,3 +1,4 @@
+import type { TaskDraft } from './project';
 export type TaskStatus =
   | 'backlog'
   | 'ready'
@@ -160,6 +161,20 @@ export type WorkspaceAction =
   | { type: 'approve_deliverable'; taskId: string; feedback?: string }
   | { type: 'reject_deliverable'; taskId: string; feedback: string }
   | { type: 'answer_clarification'; clarificationId: string; answer: string }
+  | { type: 'update_project'; name: string; goal: string; deadline: string }
+  | { type: 'create_task'; task: TaskDraft }
+  | { type: 'edit_task'; taskId: string; task: TaskDraft }
+  | { type: 'delete_task'; taskId: string }
+  | { type: 'complete_human_task'; taskId: string; result: string }
+  | {
+      type: 'add_agent';
+      name: string;
+      description: string;
+      capabilities: string[];
+      maxActiveTasks: number;
+    }
+  | { type: 'import_workspace'; workspace: Workspace }
+  | { type: 'new_project' }
   | { type: 'reset_demo' };
 
 export interface ActionResult {

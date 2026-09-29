@@ -1,33 +1,29 @@
-# Relay architecture
+# Architecture
 
-## System shape
+Relay uses React 19, vinext, a Cloudflare Worker, and D1. The browser renders the project and registers six page-side WebMCP tools. Both UI controls and tools use the same client store and `/api/workspace` endpoint.
 
-Relay is one React/Vinext application with four deliberately shared layers:
+## Persistence
 
-1. **Visible human interface** — command center, six-column task board, Human Inbox, agent roster, activity history, packet dialog, export, and reset.
-2. **Page-side WebMCP adapter** — feature detection and exactly-once registration for six narrow tools.
-3. **Domain rules** — dependency readiness, packet completeness, capacity, ownership, progress, review gates, clarification, unlocking, versioning, and audit events.
-4. **Durable workspace service** — a D1-backed versioned workspace aggregate exposed through `/api/workspace`.
+GET creates or reads a browser-bound workspace. A random 256-bit HttpOnly, SameSite=Strict cookie is hashed to obtain the D1 row key; the exposed workspace ID is not the cookie credential. HTTPS sets Secure. No credentials are embedded in links or exports.
 
-Both the visible interface and WebMCP writes call the same API and the same domain-rule function. A successful write returns the new version and workspace; the client dispatches `relayplan:mutated` so every visible surface updates immediately.
+The previous global example row is left in place and never selected by this code. New visitors start with an empty project and four profiles. An example project is an explicit replacement action.
 
-## Persistence and concurrency
+POST accepts `{expectedVersion, action}`. The server validates the action, selects the cookie's workspace, applies pure domain rules, then updates the row only if its stored version still matches. A race returns a conflict. Versions increase through reset and import as well as ordinary edits. There is no automatic write retry or optimistic UI mutation.
 
-The `workspaces` table contains an ID, monotonically increasing version, serialized JSON workspace, and timestamps. A mutation reads version *n*, applies a pure domain transition, then updates with `WHERE version = n`. If another write wins first, Relay retries once and otherwise returns a clear conflict instead of overwriting unseen work.
+The runtime creates the table idempotently; the checked-in SQL migration is also idempotent. Data and indexes from prior releases remain compatible. Local Wrangler storage is separate from production.
 
-The API creates and seeds the table idempotently. The same schema is checked in as a Drizzle migration.
+## Client state and errors
 
-## Trust and authority
+The client store uses `useSyncExternalStore`. The UI and tools receive the same confirmed workspace, and selected tasks are resolved by ID on each render. Reads coalesce and do not replace newer state with older versions. Local simultaneous writes are refused while one save is pending. Other tabs require explicit Refresh and receive stale-version conflicts.
 
-Agent profiles are coordination labels, not identities. Relay checks the supplied agent ID against task assignment and capacity, but does not claim cryptographic authentication.
+Requests time out after 20 seconds. A lost response may leave a write's outcome unknown, so errors instruct the user to refresh before retrying. Cancellation is checked before a tool starts a write; once submitted, the client waits for the response rather than claiming a server commit was rolled back. There is no offline success fallback.
 
-The agent tool boundary cannot approve, reject, answer a clarification, delete data, change the project goal, or finalize the project. Approval-required work reaches `human_review`; only a visible human action can move it to `completed`.
+## Task model
 
-## Failure behavior
+Task packets require context, objective, output, criteria, deadline, and review instructions. Draft tasks may be edited, with references checked for cycles. A profile's capacity includes work in progress, blocked work, and work awaiting review. Blocking questions and the latest progress blocker are evaluated separately. Submission requires unblocked work; only a review approval completes an agent assignment.
 
-- Unknown or extra input fields are rejected.
-- A rules violation returns a conflict and makes no state change.
-- The UI remains usable when WebMCP is absent.
-- The static local preview falls back to deterministic in-memory demo state when D1 is unavailable; the production deployment uses D1.
-- No tool reports success until the durable mutation response is received.
+Backups contain the complete workspace, within documented size and history limits. Import validates the graph and workflow state, then keeps the destination's identity and increments its version. Replacing a project does not import an access cookie.
 
+## Boundaries
+
+Agent profiles are labels, not logins. Page-tool restrictions define a workflow surface, not authorization against software operating the same browser session. Relay does not execute task instructions, fetch evidence references, call providers, or launch agents. Human and agent content is rendered as text.

@@ -2,90 +2,95 @@
 
 **One plan for you and your agents.**
 
-Relay is a shared WebMCP project control center for human tasks, agent assignments, task packets, dependencies, progress, clarification requests, deliverables, approvals, and auditable handoffs. Agents can discover and execute structured work from the page. Humans retain the final authority to approve or reject it.
+Relay is a project workspace for turning a goal into tasks, handing structured work to an agent, and reviewing the result. Create your own project and tasks, track dependencies, answer questions, request revisions, and approve deliverables. Human tasks can be completed directly with a recorded result.
 
-**Live app:** [relay.alx21.chatgpt.site](https://relay.alx21.chatgpt.site)
+**[Open Relay](https://relay.alx21.chatgpt.site)** · Free to use · [MIT license](LICENSE)
 
-**Narrated demo:** [Watch on YouTube](https://youtu.be/ztukxIXQ3rA) · 2:14
+![Relay workspace](docs/assets/relay-desktop.png)
 
-![Relay command center](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/447/datas/original.png)
+## Start with your own work
 
-## Screenshots
+1. Open Relay and choose **Project details**. Set a name, goal, and optional target date.
+2. **Add task**. Include the objective, context, expected output, definition of done, deadline, and any dependencies. Choose a human or agent owner.
+3. Open a human task and record its result with **Mark complete**. For an agent task, connect an agent through a WebMCP-capable browser, or use **Assign task** to record an assignment manually.
+4. Review submissions and questions in **Human inbox**. Read the complete content, evidence, and limitations before approving. Request revisions with feedback when needed.
+5. **Export backup** regularly. Use **Import backup** to restore the project in another browser or device. Restore and **New project** replace the current project only after confirmation.
 
-| Human approval inbox | Completed handoff and dependency unlock |
-| --- | --- |
-| ![Relay Human Inbox](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/446/datas/original.png) | ![Relay task dependency unlock](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/449/datas/original.png) |
+**Explore an example** loads a three-task community workshop plan. It contains no fabricated deliverables or progress. You can edit or delete unclaimed tasks; tasks with dependents must be removed from those dependencies before deletion.
 
-![Relay activity history and six-tool WebMCP status](https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/005/209/448/datas/original.png)
+## What actually happens
 
-## Why Relay
+- Eligible agent work must have a complete task packet, completed dependencies, no assignment, and a matching profile with available capacity. Capability names are case-sensitive; an empty profile capability list is general-purpose, and tasks without labels accept any available profile.
+- Claiming a task records an assignment. Progress notes and questions appear immediately in the same board used by the person.
+- A blocking question stays blocking until answered. Other unanswered blocking questions and separately reported progress blockers remain in force.
+- Submitting a deliverable moves work to **Human review**. Approval completes it and unlocks dependencies; revisions return it to **In progress** with feedback preserved.
+- The page tools return saved database results. A failed request is reported as an error and never replaced with an unsaved pretend success.
 
-Ordinary planners do not tell an agent which work is truly ready, which context is required, or where human approval is mandatory. Relay turns the visible project board into a safe, structured agent interface. Its WebMCP tools mutate the same durable workspace the person sees, so a claim, progress note, blocker, clarification, or deliverable is immediately visible and auditable.
+Relay **does not launch agents, call a language-model API, perform external work, verify evidence URLs, or run background jobs**. A connected agent does the task using its own tools and submits the result. Profile names are assignment labels, not authenticated identities. You can perform every task operation through the ordinary browser UI even when WebMCP is unavailable.
+
+## Your workspace and backups
+
+Each browser receives a separate workspace stored in the server's Cloudflare D1 database. An HttpOnly cookie selects it; there is no account, team invitation, or shareable workspace link. Tabs in the same browser share the workspace. Click **Refresh** to see another tab's changes; stale edits are rejected instead of overwriting saved work.
+
+- Data is **server-stored**, not offline or end-to-end encrypted.
+- Clearing the cookie, using a different browser profile, or allowing it to expire can remove your access. The cookie is renewed on workspace reads for up to one year. Keep exported JSON backups; there is no account recovery.
+- Import validates structure, references, dependencies, and workflow states before replacing your project. The destination keeps its own browser identity.
+- Limits: 100 tasks, 20 agent profiles, 200 clarification requests, 200 progress notes per task, 50 deliverables per task, and 900 KB of serialized workspace data. The latest 100 activity events are retained. These are small-project limits, not unlimited storage.
+- Human review is a workflow convention. Anyone or any software using the same browser session can use the UI or its API. Omitting approval from the six agent tools is not a separate authentication boundary.
+
+Older shared example rows are not used by this release. The update leaves those rows intact and starts each visitor with a separate empty workspace.
 
 ## WebMCP tools
 
-Relay feature-detects `document.modelContext` (with the compatible navigator fallback) and registers six tools exactly once:
+Tools register after the saved workspace loads, when `document.modelContext` or `navigator.modelContext` is available. Registration is removed when the component unmounts. You do not need an API key for Relay itself.
 
-| Tool | Mode | Purpose |
-| --- | --- | --- |
-| `get_workspace_context` | Read | Summarize goals, progress, tasks, approvals, agents, activity, and workspace version. |
-| `list_ready_tasks` | Read | Return claimable work after dependency, capability, packet, and capacity checks. |
-| `claim_task` | Write | Assign an eligible Ready task and move it to In Progress. |
-| `update_task_progress` | Write | Record progress, time, blockers, and missing information. |
-| `submit_deliverable` | Write | Save evidence-backed work and move it to Human Review, never Completed. |
-| `request_human_input` | Write | Create a clarification and optionally block the task. |
+| Tool | Purpose |
+| --- | --- |
+| `get_workspace_context` | Read the project, profiles, full task packets, progress, deliverables, reviewer feedback, and pending **and answered** questions. |
+| `list_ready_tasks` | Find eligible tasks, optionally narrowed by profile and capabilities. |
+| `claim_task` | Assign an eligible task to an available profile. |
+| `update_task_progress` | Record progress from 0–99%, time, and current blockers. |
+| `request_human_input` | Ask a question, with an explicit choice about whether work can continue. |
+| `submit_deliverable` | Submit content, evidence, limitations, and a recommended next step for review. |
 
-Approval, rejection, revision requests, and clarification answers are deliberately absent from the agent tool surface.
+Example instruction for your connected agent:
 
-## The demonstration
+> Read my Relay workspace, find a task for the planning-agent profile, and claim it. Use the task packet and supplied references to do the work. Ask me if something essential is missing. Submit the actual result with evidence and limitations for review.
 
-The seeded workspace, **Launch a WebMCP Challenge Entry**, includes four coordination profiles, Ready work, dependency-locked work, work in progress, a deliverable awaiting approval, a blocker, a clarification, and recent audit events. Demonstration data is explicitly labeled in the interface.
+This is page-side WebMCP, not a standalone remote MCP server. Browser support is required for agent tool discovery. [Tool contract and examples](docs/WEBMCP_TOOLS.md).
 
-The core flow is:
+## Run locally
 
-1. An agent reads the workspace and lists Ready tasks.
-2. It claims eligible work and receives the complete task packet.
-3. It records progress or asks the human for missing context.
-4. It submits a deliverable with evidence and limitations.
-5. The human approves or rejects in the Human Inbox.
-6. Approval completes the task, unlocks eligible dependencies, and records the full handoff.
+Requires **Node.js 24+** and **pnpm 11.19.0**. No provider API key is needed.
 
-## Local development
-
-Requirements: Node.js 24 or newer and pnpm.
-
-```bash
-pnpm install
-pnpm dev
+```sh
+git clone https://github.com/agammann/relay-webmcp.git
+cd relay-webmcp
+pnpm install --frozen-lockfile
+pnpm build
+pnpm start --port 3013
 ```
 
-Open `http://localhost:3000`. A standard WebMCP-capable browser exposes the page-side tools; the planner remains usable when WebMCP is unavailable.
+Open `http://localhost:3013`. Wrangler runs the built Worker and a local D1 database under `.wrangler/`. It does not connect to the public site's production database. `pnpm dev` is available for development with the Cloudflare Vite runtime. Static file hosting alone cannot run this app.
 
-## Verification
-
-```bash
+```sh
+pnpm test
 pnpm lint
 pnpm typecheck
-pnpm test
+pnpm exec playwright install chromium
 pnpm build
+pnpm test:e2e
 ```
 
-The unit suite covers domain rules, closed runtime validation, approval boundaries, dependency unlocks, audit events, and the six-tool registration contract. See [docs/TEST_PLAN.md](docs/TEST_PLAN.md) for live verification.
+Browser tests run the actual built Worker with local D1. Their WebMCP registration harness exercises the page handlers; it does not substitute for checking native discovery in a supporting browser. CI runs the same checks on Linux and uploads failure traces.
 
-## Deployment
+## Project layout
 
-Relay is a Vinext/React application deployed through ChatGPT Sites with a Cloudflare D1 binding named `DB`. The workspace is stored as one versioned JSON aggregate and updated with optimistic concurrency. See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
+- `lib/rules.ts`: task transitions, dependencies, capacity, and history.
+- `lib/validation.ts` / `lib/backup.ts`: strict action and backup validation.
+- `lib/session.ts` / `lib/database.ts`: browser workspace selection and versioned D1 writes.
+- `lib/client.ts` / `lib/tools.ts`: one saved state shared by UI and page tools.
+- `components/relay-workspace.tsx`: task, review, profile, and backup controls.
+- `e2e/`: complete handoffs, ordinary UI use, persistence, browser isolation, conflicts, errors, and mobile checks.
 
-## Documentation
-
-- [Architecture](docs/ARCHITECTURE.md)
-- [WebMCP tools and judge prompts](docs/WEBMCP_TOOLS.md)
-- [Test plan](docs/TEST_PLAN.md)
-- [Demo script](docs/DEMO_SCRIPT.md)
-- [Devpost submission copy](docs/DEVPOST_SUBMISSION.md)
-- [Submission checklist](docs/SUBMISSION_CHECKLIST.md)
-
-## License
-
-[MIT](LICENSE) © 2026 Relay contributors.
-
+[Architecture](docs/ARCHITECTURE.md) · [Deployment](docs/DEPLOYMENT.md) · [Verification](docs/TEST_PLAN.md) · [Security policy](SECURITY.md)

@@ -1,6 +1,4 @@
-import { RelayApp } from '@/components/relayplan-app';
-
-export default function Home() {
-  return <RelayApp />;
+import RelayWorkspace from '@/components/relay-workspace';
+export default function Page() {
+  return <RelayWorkspace />;
 }
-

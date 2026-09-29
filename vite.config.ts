@@ -2,7 +2,7 @@ import { sites } from '@openai/sites-vite-plugin';
 import tailwindcss from '@tailwindcss/postcss';
 import vinext from 'vinext';
 import { defineConfig } from 'vite';
-import hostingConfig from './.openai/hosting.json';
+import hostingConfig from './.openai/hosting.json' with { type: 'json' };
 
 const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
   '00000000-0000-4000-8000-000000000000';
@@ -41,27 +41,18 @@ export default defineConfig(async () => {
   process.env.WRANGLER_LOG_PATH ??= '.wrangler/logs';
   process.env.MINIFLARE_REGISTRY_PATH ??= '.wrangler/registry';
 
-  // Local previews can skip Miniflare when the environment blocks child
-  // processes. Production builds still include the Cloudflare runtime plugin.
-  const staticPreview = process.env.RELAYPLAN_STATIC_PREVIEW === '1';
-  const cloudflarePlugin = staticPreview
-    ? []
-    : [
-        (await import('@cloudflare/vite-plugin')).cloudflare({
-          viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
-          config: localBindingConfig,
-        }),
-      ];
+  const cloudflarePlugin = [
+    (await import('@cloudflare/vite-plugin')).cloudflare({
+      viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
+      config: localBindingConfig,
+    }),
+  ];
 
   return {
     css: { postcss: { plugins: [tailwindcss()] } },
     server: isCodexSeatbeltSandbox
       ? { watch: { useFsEvents: false, usePolling: true } }
       : undefined,
-    plugins: [
-      vinext(),
-      sites(),
-      ...cloudflarePlugin,
-    ],
+    plugins: [vinext(), sites(), ...cloudflarePlugin],
   };
 });

@@ -1,21 +1,13 @@
 # Relay security
 
-Relay is a demonstration planning workspace. Do not enter secrets, credentials, regulated data, or private production material.
+## Scope and boundaries
 
-## Security boundaries
+The current default branch is maintained. Report suspected vulnerabilities privately through this repository's GitHub Security reporting feature when available; otherwise contact the repository maintainer without posting sensitive details publicly. Include the version, affected behavior, and a minimal safe reproduction.
 
-- WebMCP tools expose only two reads and four constrained agent writes.
-- Human approval, rejection, clarification answers, reset, export, and project-finalization actions remain in the visible interface.
-- Every mutation is runtime-validated, rejects unknown fields, applies the same shared domain rules as the UI, and emits an audit event.
-- Approval-required work cannot be completed by an agent tool.
-- User content is rendered as text; the project does not use `dangerouslySetInnerHTML`.
-- No API key, user credential, or secret is required in the client.
+Each browser gets a separate server-stored workspace selected by an HttpOnly cookie. HTTPS uses Secure and SameSite=Strict. A hash of the random cookie is the workspace ID; exports do not contain the cookie. There is no account recovery, team access model, or end-to-end encryption. Use backups and avoid storing secrets or sensitive production data.
 
-## Reporting
+Mutations require JSON and the current workspace version. Runtime validation, dependency rules, and compare-and-swap writes prevent invalid transitions and accidental stale overwrites. The API rejects cross-origin mutations and sends no-store responses. Text is rendered without raw HTML execution; references are not fetched.
 
-Please report a suspected vulnerability privately to the repository maintainer rather than opening a public exploit issue. Include the affected version, reproduction steps, impact, and the smallest safe proof of concept.
+The six WebMCP tools omit approval and project replacement. That is a workflow constraint, not authentication of a human role. Agent profiles are labels. Anyone or any software controlling the same browser session can use its interface and API. Relay does not authenticate separate agents or provide a multi-user authorization system.
 
-## Supported version
-
-The latest deployed Relay version and the default branch are supported during the OpenAI WebMCP Challenge evaluation period.
-
+A failed or interrupted save is not reported as locally successful. The response can be lost after a commit, so refresh and check the current state before retrying. There is no offline write queue.

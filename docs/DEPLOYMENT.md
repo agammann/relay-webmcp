@@ -1,46 +1,13 @@
 # Deployment
 
-Relay targets ChatGPT Sites through Vinext and the Cloudflare runtime.
+The live application is https://relay.alx21.chatgpt.site. It requires a Worker runtime and a D1 binding named `DB`; it is not a static-only app.
 
-## Bindings
+`.openai/hosting.json` identifies the existing Sites project and database binding. Keep its project identity when publishing updates. Build and test locally, push the exact source, package the built Worker and hosting config, save that version, and publish the saved version. Preserve the site's public audience unless intentionally changing it.
 
-`.openai/hosting.json` declares one D1 binding:
+Local development uses the placeholder D1 database configuration in `vite.config.ts` with Wrangler's local emulator. Build with `pnpm build`; run `pnpm start --port 3013`. State lives under `.wrangler/`, which is ignored. Stop Wrangler before rebuilding on Windows to avoid locked output files.
 
-```json
-{
-  "d1": "DB",
-  "r2": null
-}
-```
+The runtime initializes the workspaces table with `CREATE TABLE IF NOT EXISTS`. The SQL migration uses the same table and may be applied idempotently. Upgrading does not drop tables or overwrite old global example rows; visitor workspaces are addressed by a new cookie-derived ID.
 
-The production runtime reads `env.DB` from `cloudflare:workers`. No application secret or OpenAI API key is required.
+For self-hosting, configure your own Cloudflare Worker and D1 binding, adjust canonical URLs, and use your own deployment credentials. Do not point local tests at a production database. JSON exports are the supported user-controlled recovery method; there is no account recovery flow or automatic browser-to-browser sync.
 
-## Build
-
-```bash
-pnpm install --frozen-lockfile
-pnpm lint
-pnpm typecheck
-pnpm test
-pnpm build
-```
-
-The Sites release process is:
-
-1. Create or reuse the opaque Sites project recorded in `.openai/hosting.json`.
-2. Push the exact source commit to the Sites source repository.
-3. Package the successful `dist` output with the Sites packaging helper.
-4. Save a site version tied to that commit SHA.
-5. Deploy that saved version.
-6. Verify deployment status, public access, D1 persistence, desktop/mobile UI, and WebMCP read/write behavior on the returned production URL.
-
-Do not invent or preconfigure a deployment URL. Record only the URL returned by a successful production deployment.
-
-## Database
-
-The workspace schema is in `db/schema.ts` and `drizzle/0000_relayplan_workspace.sql`. The API also runs the same `CREATE TABLE IF NOT EXISTS` statements, seeds the demonstration once, and optimizes the database. Mutations use optimistic version checks.
-
-## Rollback
-
-Sites versions are immutable. To roll back, redeploy a previously verified saved version. The reset-demo UI changes workspace content only; it does not alter deployment code.
-
+After deployment, inspect the public page in a fresh browser context, verify a saved mutation and reload, discover the six native tools in a supporting browser, and check the exact GitHub commit's CI. Local test success alone does not establish that production is working.

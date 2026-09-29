@@ -6,17 +6,28 @@ import { parseWorkspaceAction, ValidationError } from '../lib/validation.ts';
 
 test('mutation payloads accept only declared fields', () => {
   assert.throws(
-    () => parseWorkspaceAction({ type: 'claim_task', agentId: 'builder-agent', taskId: 'RP-105', hidden: true }),
+    () =>
+      parseWorkspaceAction({
+        type: 'claim_task',
+        agentId: 'builder-agent',
+        taskId: 'RP-105',
+        hidden: true,
+      }),
     ValidationError,
   );
 });
 
 test('progress payloads enforce numeric bounds', () => {
   assert.throws(
-    () => parseWorkspaceAction({
-      type: 'update_task_progress', agentId: 'builder-agent', taskId: 'RP-103', note: 'Progress note',
-      completionPercentage: 101, timeSpentMinutes: 15,
-    }),
+    () =>
+      parseWorkspaceAction({
+        type: 'update_task_progress',
+        agentId: 'builder-agent',
+        taskId: 'RP-103',
+        note: 'Progress note',
+        completionPercentage: 101,
+        timeSpentMinutes: 15,
+      }),
     ValidationError,
   );
 });
