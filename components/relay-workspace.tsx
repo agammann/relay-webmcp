@@ -537,6 +537,7 @@ function TaskDetail({
                 <label className="field">
                   <span>Progress (0–99%)</span>
                   <input
+                    key={`${task.id}:${task.completionPercentage}`}
                     name="percent"
                     type="number"
                     min={0}

@@ -21,20 +21,22 @@
     "typecheck": "tsc --noEmit",
     "lint": "oxlint app components lib types tests e2e",
     "format": "oxfmt",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:webmcp": "playwright test --config playwright.webmcp.config.ts"
   },
   "dependencies": {
+    "lucide-react": "1.31.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "react-server-dom-webpack": "19.2.8",
-    "vinext": "1.0.0-beta.8",
-    "lucide-react": "1.31.0",
+    "vinext": "1.0.0",
     "zod": "3.25.76"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "1.37.1",
-    "@cloudflare/workers-types": "4.20260515.1",
+    "@cloudflare/vite-plugin": "1.62.3",
+    "@cloudflare/workers-types": "5.20260930.2",
     "@openai/sites-vite-plugin": "0.2.0",
+    "@playwright/test": "1.58.2",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
@@ -47,8 +49,7 @@
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",
     "vite": "8.2.2",
-    "wrangler": "4.92.0",
-    "@playwright/test": "1.58.2"
+    "wrangler": "4.145.0"
   },
   "type": "module"
 }
