@@ -2,6 +2,8 @@
 
 Tools register when the saved workspace has loaded. The browser must expose `document.modelContext` or `navigator.modelContext`. All six have closed JSON schemas and mark returned user content as untrusted. The UI remains available in ordinary browsers.
 
+Each tool has a title for discovery. Registrations use an `AbortSignal`, withdraw on `pagehide` and unmount, and return on a persisted `pageshow`. Registration callbacks from a hidden or replaced document cannot report a connected state. Native testing uses the actual browser API; see [Verification](TEST_PLAN.md).
+
 | Tool | Required input | Optional input |
 | --- | --- | --- |
 | get_workspace_context | `{}` | None |

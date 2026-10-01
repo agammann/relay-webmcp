@@ -42,7 +42,7 @@ Older shared example rows are not used by this release. The update leaves those 
 
 ## WebMCP tools
 
-Tools register after the saved workspace loads, when `document.modelContext` or `navigator.modelContext` is available. Registration is removed when the component unmounts. You do not need an API key for Relay itself.
+Tools register after the saved workspace loads, when `document.modelContext` or `navigator.modelContext` is available. They disconnect on page hide and unmount, and register again when the browser restores a cached page. You do not need an API key for Relay itself.
 
 | Tool | Purpose |
 | --- | --- |
@@ -58,6 +58,10 @@ Example instruction for your connected agent:
 > Read my Relay workspace, find a task for the planning-agent profile, and claim it. Use the task packet and supplied references to do the work. Ask me if something essential is missing. Submit the actual result with evidence and limitations for review.
 
 This is page-side WebMCP, not a standalone remote MCP server. Browser support is required for agent tool discovery. [Tool contract and examples](docs/WEBMCP_TOOLS.md).
+
+WebMCP is experimental. For native Chrome testing, enable **WebMCP for testing** at `chrome://flags/#enable-webmcp-testing` and relaunch, following the [Chrome setup guide](https://developer.chrome.com/docs/ai/webmcp). A compatible browser agent must also support discovering and invoking page tools; enabling the API alone does not connect an agent.
+
+Native tests passed on Windows with Chrome **154.0.8037.93** and Edge **154.0.4258.48**, with the `WebMCP` feature enabled. They invoke the real browser API and check all six tools, saved D1 results, human review, validation, failures, and page restoration. Ordinary browser controls work with the API absent. See [verification commands and the tested scope](docs/TEST_PLAN.md); these results do not establish support for every browser or agent.
 
 ## Run locally
 
@@ -77,12 +81,15 @@ Open `http://localhost:3013`. Wrangler runs the built Worker and a local D1 data
 pnpm test
 pnpm lint
 pnpm typecheck
+pnpm audit
 pnpm exec playwright install chromium
+pnpm exec playwright install chrome
 pnpm build
 pnpm test:e2e
+pnpm test:webmcp
 ```
 
-Browser tests run the actual built Worker with local D1. Their WebMCP registration harness exercises the page handlers; it does not substitute for checking native discovery in a supporting browser. CI runs the same checks on Linux and uploads failure traces.
+Run the browser suites sequentially: their Wrangler processes share local storage. `test:e2e` checks ordinary UI flows and page handlers through a registration harness; `test:webmcp` checks native browser discovery and invocation without replacing the API. Both run the built Worker with local D1. CI runs these checks on Linux, uploads failure traces, and retains the native JSON report on every run.
 
 ## Project layout
 
