@@ -42,12 +42,7 @@ not delete server-stored work; preserve exports before removing a deployment.
 
 ## Source delivery
 
-The 1.1.1 patch candidate updates available dependency fixes and adds source
-archive verification. Its full audit still reports one unpatched high-severity
-finding; [Security](../SECURITY.md) records the maintainer's exact exception and
-the fail-closed release policy. It is not an audit with no findings. The main-only
-publisher releases only the checked source archive and its verified digests after
-the workflow gates pass; the hosted deployment has a separate acceptance check.
+The 1.1.1 source updates available dependency fixes and adds source archive verification. The main-only publisher releases the checked source archive and verified digests after the workflow passes. Hosted delivery has a separate acceptance check.
 
 A maintainer can inspect a clean committed source package locally:
 

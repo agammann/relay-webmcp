@@ -2,9 +2,7 @@
 
 ## 1.1.1
 
-- Retain available patches for tinypool 2.1.2, source-map-js 1.2.2 and sharp
-  0.35.5. Retain the full unpatched braces finding under the maintainer's exact
-  documented exception; fail on new findings, changed metadata or an available patch.
+- Retain available patches for tinypool 2.1.2, source-map-js 1.2.2 and sharp 0.35.5.
 - Keep the built Worker's local D1 data under the repository's `.wrangler/state`
   directory, outside rebuild output. Earlier `pnpm start` instances used
   `dist/server/.wrangler/state`; export that work before changing local storage.
