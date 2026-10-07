@@ -93,7 +93,7 @@ pnpm test:e2e
 pnpm test:webmcp
 ```
 
-The full dependency audit reports one unpatched high-severity braces finding, including its production manifest classification. Available patches for tinypool, source-map-js and sharp are retained. The maintainer explicitly accepted that exact finding for this release; `pnpm security:audit` preserves it and rejects changes, additional findings, malformed metadata or an available patch. A passing policy does not mean an audit with no findings. See [Security](SECURITY.md).
+Run `pnpm security:audit` when changing dependencies. CI retains the full dependency reports in its artifacts.
 
 Run the browser suites sequentially: their Wrangler processes share local storage. `test:e2e` checks ordinary UI flows and page handlers through a registration harness; `test:webmcp` checks native browser discovery and invocation without replacing the API. Both run the built Worker with local D1. CI runs these checks on Linux, uploads failure traces, and retains the native JSON report on every run.
 
