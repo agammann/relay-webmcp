@@ -5,6 +5,9 @@ allowBuilds:
 overrides:
   fast-uri@>=3.0.0 <3.1.8: 3.1.8
   fflate@>=0.7.0 <0.7.5: 0.7.5
+  sharp@>=0.35.0 <0.35.5: 0.35.5
+  source-map-js@>=1.0.0 <1.2.2: 1.2.2
+  tinypool@>=2.0.0 <2.1.2: 2.1.2
 minimumReleaseAgeExclude:
   - '@cloudflare/vite-plugin@1.62.3'
   - '@cloudflare/workerd-darwin-64@1.20260930.2'

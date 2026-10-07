@@ -44,14 +44,14 @@ Older shared example rows are not used by this release. The update leaves those 
 
 Tools register after the saved workspace loads, when `document.modelContext` or `navigator.modelContext` is available. They disconnect on page hide and unmount, and register again when the browser restores a cached page. You do not need an API key for Relay itself.
 
-| Tool | Purpose |
-| --- | --- |
+| Tool                    | Purpose                                                                                                                           |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `get_workspace_context` | Read the project, profiles, full task packets, progress, deliverables, reviewer feedback, and pending **and answered** questions. |
-| `list_ready_tasks` | Find eligible tasks, optionally narrowed by profile and capabilities. |
-| `claim_task` | Assign an eligible task to an available profile. |
-| `update_task_progress` | Record progress from 0–99%, time, and current blockers. |
-| `request_human_input` | Ask a question, with an explicit choice about whether work can continue. |
-| `submit_deliverable` | Submit content, evidence, limitations, and a recommended next step for review. |
+| `list_ready_tasks`      | Find eligible tasks, optionally narrowed by profile and capabilities.                                                             |
+| `claim_task`            | Assign an eligible task to an available profile.                                                                                  |
+| `update_task_progress`  | Record progress from 0–99%, time, and current blockers.                                                                           |
+| `request_human_input`   | Ask a question, with an explicit choice about whether work can continue.                                                          |
+| `submit_deliverable`    | Submit content, evidence, limitations, and a recommended next step for review.                                                    |
 
 Example instruction for your connected agent:
 
@@ -61,7 +61,7 @@ This is page-side WebMCP, not a standalone remote MCP server. Browser support is
 
 WebMCP is experimental. For native Chrome testing, enable **WebMCP for testing** at `chrome://flags/#enable-webmcp-testing` and relaunch, following the [Chrome setup guide](https://developer.chrome.com/docs/ai/webmcp). A compatible browser agent must also support discovering and invoking page tools; enabling the API alone does not connect an agent.
 
-Native tests passed on Windows with Chrome **154.0.8037.93** and Edge **154.0.4258.48**, with the `WebMCP` feature enabled. They invoke the real browser API and check all six tools, saved D1 results, human review, validation, failures, and page restoration. Ordinary browser controls work with the API absent. See [verification commands and the tested scope](docs/TEST_PLAN.md); these results do not establish support for every browser or agent.
+The October 7, 2026 local checks passed all five ordinary cases on Chromium **145.0.7632.6**, all five native cases on Chrome **155.0.8059.39**, and a measured-result task through revision, resubmission, approval, reload and backup restore. Chrome 155 native calls use object arguments. Earlier native tests passed on Windows with Chrome **154.0.8037.93** and Edge **154.0.4258.48**, with the `WebMCP` feature enabled. They invoke the real browser API and check all six tools, saved D1 results, human review, validation, failures, and page restoration. Ordinary browser controls work with the API absent. See [verification commands and the tested scope](docs/TEST_PLAN.md); these results do not establish support for every browser or agent.
 
 ## Run locally
 
@@ -75,19 +75,25 @@ pnpm build
 pnpm start --port 3013
 ```
 
-Open `http://localhost:3013`. Wrangler runs the built Worker and a local D1 database under `.wrangler/`. It does not connect to the public site's production database. `pnpm dev` is available for development with the Cloudflare Vite runtime. Static file hosting alone cannot run this app.
+Open `http://localhost:3013`. Wrangler runs the built Worker and a local D1 database under the repository's `.wrangler/state`, outside build output. It does not connect to the public site's production database. `pnpm dev` is available for development with the Cloudflare Vite runtime. Static file hosting alone cannot run this app.
+
+If you have work from the earlier local start command, export it before upgrading or rebuilding: its default data location was `dist/server/.wrangler/state`. Import that backup after starting the updated command. Production D1 is unaffected. [Recovery and upgrades](docs/STABILITY.md).
 
 ```sh
 pnpm test
 pnpm lint
 pnpm typecheck
 pnpm audit
+pnpm test:audit-policy
+pnpm security:audit
 pnpm exec playwright install chromium
 pnpm exec playwright install chrome
 pnpm build
 pnpm test:e2e
 pnpm test:webmcp
 ```
+
+The full dependency audit reports one unpatched high-severity braces finding, including its production manifest classification. Available patches for tinypool, source-map-js and sharp are retained. The maintainer explicitly accepted that exact finding for this release; `pnpm security:audit` preserves it and rejects changes, additional findings, malformed metadata or an available patch. A passing policy does not mean an audit with no findings. See [Security](SECURITY.md).
 
 Run the browser suites sequentially: their Wrangler processes share local storage. `test:e2e` checks ordinary UI flows and page handlers through a registration harness; `test:webmcp` checks native browser discovery and invocation without replacing the API. Both run the built Worker with local D1. CI runs these checks on Linux, uploads failure traces, and retains the native JSON report on every run.
 
@@ -100,4 +106,4 @@ Run the browser suites sequentially: their Wrangler processes share local storag
 - `components/relay-workspace.tsx`: task, review, profile, and backup controls.
 - `e2e/`: complete handoffs, ordinary UI use, persistence, browser isolation, conflicts, errors, and mobile checks.
 
-[Architecture](docs/ARCHITECTURE.md) · [Deployment](docs/DEPLOYMENT.md) · [Verification](docs/TEST_PLAN.md) · [Security policy](SECURITY.md)
+[v1 scope and recovery](docs/STABILITY.md) · [Changes](CHANGELOG.md) · [Architecture](docs/ARCHITECTURE.md) · [Deployment](docs/DEPLOYMENT.md) · [Verification](docs/TEST_PLAN.md) · [Security policy](SECURITY.md)

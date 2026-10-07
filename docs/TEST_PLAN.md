@@ -42,3 +42,9 @@ Remove-Item Env:RELAY_WEBMCP_URL
 Remote mode runs the two discovery/read and lifecycle tests. It skips the three mutating or fault-injection fixtures. It records whether the deployed host restored a cached page rather than requiring that hosting behavior. Check public saved writes separately through the UI and a supporting browser agent, using a fresh practice workspace; do not replace an existing project. The registration harness alone is not evidence of native support. Screenshots in `docs/assets` show the checked local release.
 
 CI uses these commands on Linux and retains browser traces on failure and `test-results/native-webmcp.json` on every native run. Check the workflow for the exact published source; old successful runs do not validate later changes.
+
+## October 7, 2026 local candidate
+
+Node 24.19.0 and pnpm 11.19.0: frozen install, 17 unit cases, lint, typecheck and build passed. The five ordinary cases passed on Chromium 145.0.7632.6 and all five native cases passed on Chrome 155.0.8059.39. A separate newcomer journey created a custom task, measured an actual local Worker response, submitted it through the UI, requested a revision, resubmitted and approved it, reloaded, exported and restored the task and both deliverables. A separate task invoked all six real native tools and read back the saved D1 result. Desktop 1280×800 and mobile 390×844 had no horizontal overflow or browser errors. These are local candidate results; they do not establish deployment or a separately connected assistant host.
+
+The full audit remains unsuccessful with one unpatched high-severity braces finding. The candidate and checks are not a released 1.1.1 artifact. Historical successful CI and production checks remain dated evidence for their exact earlier source.
