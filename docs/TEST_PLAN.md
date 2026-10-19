@@ -47,4 +47,5 @@ CI uses these commands on Linux and retains browser traces on failure and `test-
 
 Node 24.19.0 and pnpm 11.19.0: frozen install, 17 unit cases, lint, typecheck and build passed. The five ordinary cases passed on Chromium 145.0.7632.6 and all five native cases passed on Chrome 155.0.8059.39. A separate newcomer journey created a custom task, measured an actual local Worker response, submitted it through the UI, requested a revision, resubmitted and approved it, reloaded, exported and restored the task and both deliverables. A separate task invoked all six real native tools and read back the saved D1 result. Desktop 1280×800 and mobile 390×844 had no horizontal overflow or browser errors. These are local candidate results; they do not establish deployment or a separately connected assistant host.
 
-The full audit remains unsuccessful with one unpatched high-severity braces finding. The candidate and checks are not a released 1.1.1 artifact. Historical successful CI and production checks remain dated evidence for their exact earlier source.
+The earlier 1.1.1 candidate retained an unpatched high-severity braces finding. The current source replaces that dependency with the maintained bounded compatibility package and requires a zero-advisory audit. Historical CI and production checks remain dated evidence for their exact earlier source.
+
