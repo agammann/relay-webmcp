@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { Workspace } from './domain';
 const text = z.string().trim().min(1).max(8000);
 const id = text.max(100);
-const date = z.string().datetime();
+const date = z.iso.datetime();
 export const deadlineSchema = z
   .string()
   .regex(/^\d{4}-\d{2}-\d{2}$/)
