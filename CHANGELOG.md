@@ -1,5 +1,10 @@
 # Changes
 
+## 1.1.3
+
+- Bound incoming workspace JSON while reading its bytes, including streamed requests without a declared size.
+- Keep the existing 1 MB request ceiling, 900 KB saved-workspace ceiling, session checks, and backup format.
+
 ## 1.1.2
 
 - Replace the unbounded brace dependency with a maintained compatibility package that preserves ordinary glob behavior and the upstream license.
