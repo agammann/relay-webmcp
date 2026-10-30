@@ -35,7 +35,7 @@ Each browser receives a separate workspace stored in the server's Cloudflare D1 
 - Data is **server-stored**, not offline or end-to-end encrypted.
 - Clearing the cookie, using a different browser profile, or allowing it to expire can remove your access. The cookie is renewed on workspace reads for up to one year. Keep exported JSON backups; there is no account recovery.
 - Import validates structure, references, dependencies, and workflow states before replacing your project. The destination keeps its own browser identity.
-- Limits: 100 tasks, 20 agent profiles, 200 clarification requests, 200 progress notes per task, 50 deliverables per task, and 900 KB of serialized workspace data. The latest 100 activity events are retained. These are small-project limits, not unlimited storage.
+- Limits: 100 tasks, 20 agent profiles, 200 clarification requests, 200 progress notes per task, 50 deliverables per task, 900 KB of serialized workspace data, and 1 MB per incoming workspace request. The latest 100 activity events are retained. These are small-project limits, not unlimited storage.
 - Human review is a workflow convention. Anyone or any software using the same browser session can use the UI or its API. Omitting approval from the six agent tools is not a separate authentication boundary.
 
 Older shared example rows are not used by this release. The update leaves those rows intact and starts each visitor with a separate empty workspace.

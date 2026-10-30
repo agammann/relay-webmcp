@@ -8,6 +8,35 @@ export class ValidationError extends Error {
   }
 }
 
+export async function readBoundedBody(request: Request, maxBytes: number) {
+  const reader = request.body?.getReader();
+  if (!reader) return '';
+  let bytes = new Uint8Array(Math.min(maxBytes, 8192));
+  let length = 0;
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) return new TextDecoder().decode(bytes.subarray(0, length));
+      if (value.byteLength > maxBytes - length) {
+        void reader.cancel().catch(() => {});
+        throw new ValidationError('Request is too large.');
+      }
+      const nextLength = length + value.byteLength;
+      if (nextLength > bytes.length) {
+        const grown = new Uint8Array(
+          Math.min(maxBytes, Math.max(nextLength, bytes.length * 2)),
+        );
+        grown.set(bytes.subarray(0, length));
+        bytes = grown;
+      }
+      bytes.set(value, length);
+      length = nextLength;
+    }
+  } finally {
+    reader.releaseLock();
+  }
+}
+
 const object = (value: unknown) => {
   if (!value || typeof value !== 'object' || Array.isArray(value)) {
     throw new ValidationError('Expected a JSON object.');

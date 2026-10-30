@@ -1,9 +1,11 @@
 import {
   apiError,
   parseWorkspaceAction,
+  readBoundedBody,
   ValidationError,
 } from '@/lib/validation';
 import { readSession } from '@/lib/session';
+const MAX_REQUEST_BYTES = 1_000_000;
 export async function GET(request: Request) {
   try {
     const session = (await readSession(request, true))!;
@@ -34,11 +36,9 @@ export async function POST(request: Request) {
       throw new ValidationError(
         'Workspace session missing. Enable cookies and reload Relay.',
       );
-    if (Number(request.headers.get('content-length')) > 1000000)
+    if (Number(request.headers.get('content-length')) > MAX_REQUEST_BYTES)
       throw new ValidationError('Backup is too large (maximum 900 KB).');
-    const raw = await request.text();
-    if (new TextEncoder().encode(raw).length > 1000000)
-      throw new ValidationError('Request is too large.');
+    const raw = await readBoundedBody(request, MAX_REQUEST_BYTES);
     const input = JSON.parse(raw);
     if (
       !input ||
