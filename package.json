@@ -36,10 +36,11 @@
     "zod": "4.6.7"
   },
   "devDependencies": {
+    "@agammann/bounded-braces": "file:vendor/bounded-braces",
     "@cloudflare/vite-plugin": "1.62.3",
     "@cloudflare/workers-types": "5.20260930.2",
     "@openai/sites-vite-plugin": "0.2.0",
-    "@playwright/test": "1.58.2",
+    "@playwright/test": "1.65.0",
     "@tailwindcss/postcss": "4.3.5",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
@@ -49,11 +50,10 @@
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
-    "tailwindcss": "4.2.1",
+    "tailwindcss": "4.3.5",
     "typescript": "5.9.3",
     "vite": "8.2.4",
-    "wrangler": "4.145.0",
-    "@agammann/bounded-braces": "file:vendor/bounded-braces"
+    "wrangler": "4.145.0"
   },
   "type": "module"
 }
