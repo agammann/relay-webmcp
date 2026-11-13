@@ -65,7 +65,7 @@ The October 7, 2026 local checks passed all five ordinary cases on Chromium **14
 
 ## Run locally
 
-Requires **Node.js 24+** and **pnpm 11.19.0**. No provider API key is needed.
+Requires **Node.js 24+** and **pnpm 11.19.0**. This checkout is checked on Node 24.0.0 and 26.13.1; the published v1.1.3 archive predates these Node 26 checks. No provider API key is needed.
 
 ```sh
 git clone https://github.com/agammann/relay-webmcp.git
