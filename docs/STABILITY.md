@@ -27,6 +27,11 @@ on Windows; `.wrangler/` is local runtime data, not a production database. A
 different browser identity gets a separate workspace. Import keeps that
 destination identity and replaces its current project only after confirmation.
 
+Import also preserves the destination's creation time, advances its saved version,
+sets a new update time and records a restoration activity entry. Project content
+and task history are restored; exported metadata is not expected to be identical
+to the earlier backup after that saved operation.
+
 The built Worker's `pnpm start` now explicitly stores local data at
 `.wrangler/state`, outside `dist/`. If you have work from the earlier local start
 command, export it before upgrading or rebuilding: its default data location was
@@ -42,7 +47,7 @@ not delete server-stored work; preserve exports before removing a deployment.
 
 ## Source delivery
 
-The 1.1.1 source updates available dependency fixes and adds source archive verification. The main-only publisher releases the checked source archive and verified digests after the workflow passes. Hosted delivery has a separate acceptance check.
+Source 1.1.4 includes patched Vite tooling, current dependency and Node 24/26 CI checks, private entry-document revalidation and source archive verification. The main-only publisher releases the checked source archive and verified digests after the workflow passes. Hosted delivery has a separate acceptance check. Prior archives remain immutable.
 
 A maintainer can inspect a clean committed source package locally:
 
@@ -61,7 +66,7 @@ checksum differences or bytes that differ from the committed checkout. It writes
 to a new folder outside the source. The archive is source and needs the pinned
 Node/pnpm toolchain and dependencies; it is not a prebuilt offline executable.
 
-For an approved future tagged release, use the source archive and SHA256SUMS
-from that release together, verify the digest before extraction, and retain the
+Use the source archive and SHA256SUMS from the same tagged release together,
+verify the digest before extraction, and retain the
 version and commit when reporting a problem. Do not treat a current default
 branch download or an older successful CI run as verification of a later patch.

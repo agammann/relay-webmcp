@@ -65,11 +65,14 @@ The October 7, 2026 local checks passed all five ordinary cases on Chromium **14
 
 ## Run locally
 
-Requires **Node.js 24+** and **pnpm 11.19.0**. This checkout is checked on Node 24.0.0 and 26.13.1; the published v1.1.3 archive predates these Node 26 checks. No provider API key is needed.
+Requires **Node.js 24+** and **pnpm 11.19.0**. CI checks Node 24.0.0 and 26.13.1. No provider API key is needed.
+
+Source **1.1.4** includes patched Vite development tooling, private revalidation for the entry document, the MIT license and a frozen lockfile. Download `relay_1.1.4_source.zip` and its checksums from the [1.1.4 release](https://github.com/agammann/relay-webmcp/releases/tag/v1.1.4). Verify with PowerShell `Get-FileHash relay_1.1.4_source.zip -Algorithm SHA256` or Linux `sha256sum -c SHA256SUMS`, then enter `relay-1.1.4` and run the same frozen installation below.
 
 ```sh
 git clone https://github.com/agammann/relay-webmcp.git
 cd relay-webmcp
+git checkout v1.1.4
 pnpm install --frozen-lockfile
 pnpm build
 pnpm start --port 3013

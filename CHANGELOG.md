@@ -1,5 +1,13 @@
 # Changes
 
+## 1.1.4
+
+- Publish the current dependency and Node 24/26 CI changes in a matching source release; prior source archives remain immutable.
+- Update Vite 8.2.4 to 8.3.7 with patched Rolldown for [GHSA-p4f5-76q4-ffq7](https://github.com/vitejs/vite/security/advisories/GHSA-p4f5-76q4-ffq7). The affected condition is an explicitly network-exposed development server, separate from the deployed production Worker.
+- Disable framework ISR for the generic entry document and require private revalidation for its HTML and RSC variants, keeping workspace API responses no-store and static asset policies unchanged.
+- Add repeated production-Worker GET/HEAD/RSC, referenced JS/CSS byte/MIME and missing-asset regression checks. Retain real native lifecycle and local back-forward-cache requirements.
+- Preserve D1 data, cookie-selected browser identity, task/review rules, backup format and six tools. No database migration or agent-launching integration is introduced.
+
 ## 1.1.3
 
 - Bound incoming workspace JSON while reading its bytes, including streamed requests without a declared size.

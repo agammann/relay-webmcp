@@ -19,6 +19,11 @@ Unit tests cover complete-packet readiness, profile capabilities and capacity, d
 
 Playwright runs the built Worker with its real local D1 emulator. It checks all six page handlers through a registration harness, a complete handoff with human answers and review, custom project/task/profile creation, export and restore, reload persistence, separate browser workspaces, conflicting tab edits, storage failures without fake success, and 390/320px layouts with dialog focus and Escape.
 
+The entry-document HTTP regression checks repeated GET/HEAD HTML and RSC
+responses for private revalidation, verifies referenced JS/CSS bytes and MIME
+types against the build, rejects a missing asset and separately confirms saved
+workspace API responses remain `no-store`. Browser-isolation tests remain separate.
+
 The five native tests use real `document.modelContext` discovery and execution. They check six titled schemas and annotations; a complete durable handoff with human answers, revision, approval and dependency unlock; invalid inputs, ownership and dependency refusals without changed state; failed saves, stale versions and separate browser identities; and withdrawal/restoration through actual back/forward caching. The suite asserts that `registerTool` is native code. It does not install the ordinary suite's registration harness.
 
 The native config enables the experimental `WebMCP` feature and permits back/forward caching. On Windows, the full local suite passed with Chrome 154.0.8037.93 and Edge 154.0.4258.48 on September 30, 2026. To run Edge in PowerShell:

@@ -13,3 +13,16 @@ The runtime initializes the workspaces table with `CREATE TABLE IF NOT EXISTS`. 
 For self-hosting, configure your own Cloudflare Worker and D1 binding, adjust canonical URLs, and use your own deployment credentials. Do not point local tests at a production database. JSON exports are the supported user-controlled recovery method; there is no account recovery flow or automatic browser-to-browser sync.
 
 After deployment, inspect the public page in a fresh browser context, verify a saved mutation and reload, discover the six native tools in a supporting browser, and check the exact GitHub commit's CI. Local test success alone does not establish that production is working.
+
+The entry document bypasses framework ISR and uses
+`Cache-Control: private, no-cache, max-age=0, must-revalidate`, including its
+root RSC query variant. Shared caches cannot retain it; browser HTTP storage may
+retain the generic shell but must revalidate it. Saved workspace responses remain
+`no-store`; static asset policies are unchanged. This increases Worker document
+renders while reducing stale-document retention when hashed build files change.
+
+Check repeated GET and HEAD document/RSC responses after publication, verify
+their referenced JS/CSS match the new build and retain the native lifecycle gate.
+Confirm an existing cookie-selected project survives reload without clearing its
+cookie or replacing its data. These controls do not purge already-cached HTML or
+guarantee atomic platform rollouts. No prior Relay asset mismatch is claimed.
