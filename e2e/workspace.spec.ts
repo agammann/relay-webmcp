@@ -228,6 +228,24 @@ test('all six page tools complete a persisted handoff with answers, revisions, a
   expect(errors).toEqual([]);
 });
 
+test('idle dependency-blocked human task keeps its action label and save guard', async ({
+  page,
+}) => {
+  await open(page);
+  await example(page);
+  await openTask(page, 'Confirm the venue');
+  await expect(
+    page.getByText('Complete the dependencies first.', { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByLabel('Result', { exact: true })).toBeDisabled();
+  await expect(
+    page.getByRole('button', { name: 'Mark complete', exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole('button', { name: 'Saving…', exact: true }),
+  ).toHaveCount(0);
+});
+
 test('custom project, human task, profile, export and restore work through the ordinary browser UI', async ({
   page,
 }) => {

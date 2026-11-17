@@ -131,12 +131,14 @@ function ActionForm({
   children,
   submit,
   busy,
+  disabled = false,
   label = 'Save',
   className = '',
 }: {
   children: ReactNode;
   submit: (data: FormData) => Promise<void>;
   busy: boolean;
+  disabled?: boolean;
   label?: string;
   className?: string;
 }) {
@@ -162,7 +164,7 @@ function ActionForm({
         void onSubmit(event);
       }}
     >
-      <fieldset disabled={busy}>
+      <fieldset disabled={busy || disabled}>
         {children}
         {error && (
           <p role="alert" className="error">
@@ -455,7 +457,8 @@ function TaskDetail({
       )}
       {task.status === 'ready' && (
         <ActionForm
-          busy={busy || !eligible.length}
+          busy={busy}
+          disabled={!eligible.length}
           label="Assign task"
           submit={(data) =>
             save({
@@ -491,7 +494,8 @@ function TaskDetail({
       )}
       {task.ownerType === 'human' && task.status !== 'completed' && (
         <ActionForm
-          busy={busy || !dependenciesComplete(workspace, task)}
+          busy={busy}
+          disabled={!dependenciesComplete(workspace, task)}
           label="Mark complete"
           submit={(data) =>
             save({
@@ -606,7 +610,8 @@ function TaskDetail({
           <details>
             <summary>Submit a deliverable</summary>
             <ActionForm
-              busy={busy || task.status === 'blocked'}
+              busy={busy}
+              disabled={task.status === 'blocked'}
               label="Submit for review"
               submit={(data) =>
                 save({

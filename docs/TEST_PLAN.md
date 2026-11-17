@@ -23,6 +23,8 @@ The entry-document HTTP regression checks repeated GET/HEAD HTML and RSC
 responses for private revalidation, verifies referenced JS/CSS bytes and MIME
 types against the build, rejects a missing asset and separately confirms saved
 workspace API responses remain `no-store`. Browser-isolation tests remain separate.
+An idle dependency-blocked human task must keep its **Mark complete** label while
+the result field and action remain disabled; only an active save says **Saving…**.
 
 The five native tests use real `document.modelContext` discovery and execution. They check six titled schemas and annotations; a complete durable handoff with human answers, revision, approval and dependency unlock; invalid inputs, ownership and dependency refusals without changed state; failed saves, stale versions and separate browser identities; and withdrawal/restoration through actual back/forward caching. The suite asserts that `registerTool` is native code. It does not install the ordinary suite's registration harness.
 
