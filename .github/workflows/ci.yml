@@ -117,10 +117,13 @@ jobs:
         run: |
           printf 'import { dlopen } from "node:ffi"; void dlopen;\n' > "$RUNNER_TEMP/node26-only.ts"
           tsc_args=(--noEmit --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ES2023 --types node --typeRoots "$GITHUB_WORKSPACE/node_modules/@types" "$RUNNER_TEMP/node26-only.ts")
-          pnpm exec tsc "${tsc_args[@]}"
+          type_probe() {
+            (cd "$RUNNER_TEMP" && "$GITHUB_WORKSPACE/node_modules/.bin/tsc" "${tsc_args[@]}")
+          }
+          type_probe
           pnpm add --save-dev --save-exact --ignore-scripts @types/node@24.0.0
           node -e 'if (require("./node_modules/@types/node/package.json").version !== "24.0.0") process.exit(1)'
-          if pnpm exec tsc "${tsc_args[@]}" > "$RUNNER_TEMP/node24-type-probe.log" 2>&1; then
+          if type_probe > "$RUNNER_TEMP/node24-type-probe.log" 2>&1; then
             echo 'Node 24 declarations unexpectedly accepted node:ffi'
             exit 1
           fi
